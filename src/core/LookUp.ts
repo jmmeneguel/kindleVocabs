@@ -2,6 +2,8 @@ import { WordInfo } from './WordInfo'
 import axios from '../../node_modules/axios'
 import { PhoneticInfo } from './PhoneticInfo'
 import { Meaning } from './Meaning'
+import { BookInfo } from './BookInfo'
+
 export class LookUp {
   id: string
   word: string
@@ -10,8 +12,9 @@ export class LookUp {
   context: string
   timestamp: Date
   wordInfos: WordInfo[]
+  bookInfo: BookInfo
 
-  constructor (id: string, word: string, stem: string, lang: string, context: string, timestamp: number) {
+  constructor (id: string, word: string, stem: string, lang: string, context: string, bookInfo: BookInfo, timestamp: number) {
     this.id = id
     this.word = word
     this.stem = stem
@@ -19,6 +22,7 @@ export class LookUp {
     this.context = context
     this.timestamp = new Date(timestamp)
     this.wordInfos = []
+    this.bookInfo = bookInfo
   }
 
   async getMeaning () {
