@@ -2,11 +2,15 @@ import { PhoneticInfo } from './PhoneticInfo'
 import { Meaning } from './Meaning'
 
 export class WordInfo {
-  phoneticInfo: PhoneticInfo
-  meaning: Meaning
+  word: string
+  phoneticInfo: PhoneticInfo[]
+  meaning: Meaning[]
+  timestamp: Date
 
-  constructor (phoneticInfo: PhoneticInfo, meaning: Meaning) {
+  constructor (word: string, phoneticInfo: PhoneticInfo[], meaning: Meaning[]) {
+    this.word = word
     this.phoneticInfo = phoneticInfo
     this.meaning = meaning
+    this.timestamp = new Date()
   }
 }

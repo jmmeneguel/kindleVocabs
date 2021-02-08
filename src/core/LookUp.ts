@@ -2,7 +2,6 @@ import { WordInfo } from './WordInfo'
 import axios from '../../node_modules/axios'
 import { PhoneticInfo } from './PhoneticInfo'
 import { Meaning } from './Meaning'
-
 export class LookUp {
   id: string
   word: string
@@ -10,7 +9,7 @@ export class LookUp {
   lang: string
   context: string
   timestamp: Date
-  wordInfo: WordInfo
+  wordInfos: WordInfo[]
 
   constructor (id: string, word: string, stem: string, lang: string, context: string, timestamp: number) {
     this.id = id
@@ -19,18 +18,34 @@ export class LookUp {
     this.lang = lang
     this.context = context
     this.timestamp = new Date(timestamp)
+    this.wordInfos = []
   }
 
   async getMeaning () {
     const lang = this.lang === 'pt' ? 'pt-BR' : this.lang
     const url = `https://api.dictionaryapi.dev/api/v2/entries/${lang}/${this.stem}`
     try {
-      const res = await axios.get(url)
-      console.log(res)
-      // const phoneticInfo: PhoneticInfo = new PhoneticInfo(res.data[0].phonetics[0].text, res.data[0].phonetics[0].audio)
-      // const meaning: Meaning = new Meaning(res.data[0].partOfSpeech, definition)
-      // this.wordInfo = new WordInfo(phoneticInfo, meaning)
-      // this.wordInfo = new WordInfo()
+      const res: {data: {word: string, phonetics: [{text: string, audio: string}], meanings: []}[]} = await axios.get(url)
+
+      const wordInfos: WordInfo[] = []
+      res.data.forEach(item => {
+        const phonetics: PhoneticInfo[] = []
+        item.phonetics.forEach(phoneticItem => {
+          const phonetic = new PhoneticInfo(phoneticItem)
+          phonetics.push(phonetic)
+        })
+
+        const meanings: Meaning[] = []
+        item.meanings.forEach(meaningItem => {
+          const meaning = new Meaning(meaningItem)
+          meanings.push(meaning)
+        })
+
+        const wordInfo = new WordInfo(item.word, phonetics, meanings)
+        wordInfos.push(wordInfo)
+      })
+
+      this.wordInfos = wordInfos
     } catch (e) {
       console.log(e)
     }
