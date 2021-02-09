@@ -1,8 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { WordInfo } from './WordInfo'
-import axios from '../../node_modules/axios'
+import axios from 'axios'
 import { PhoneticInfo } from './PhoneticInfo'
 import { Meaning } from './Meaning'
 import { BookInfo } from './BookInfo'
+
+interface apiResponseType { data: { word: string, phonetics: PhoneticInfo[], meanings: Meaning[] }[] }
 
 export class LookUp {
   id: string
@@ -14,13 +17,13 @@ export class LookUp {
   wordInfos: WordInfo[]
   bookInfo: BookInfo
 
-  constructor (id: string, word: string, stem: string, lang: string, context: string, bookInfo: BookInfo, timestamp: number) {
-    this.id = id
-    this.word = word
-    this.stem = stem
-    this.lang = lang
-    this.context = context
-    this.timestamp = new Date(timestamp)
+  constructor (lookUp: { id: string, word: string, stem: string, lang: string, context: string, timestamp: number }, bookInfo: BookInfo) {
+    this.id = lookUp.id
+    this.word = lookUp.word
+    this.stem = lookUp.stem
+    this.lang = lookUp.lang
+    this.context = lookUp.context
+    this.timestamp = new Date(lookUp.timestamp)
     this.wordInfos = []
     this.bookInfo = bookInfo
   }
@@ -29,7 +32,7 @@ export class LookUp {
     const lang = this.lang === 'pt' ? 'pt-BR' : this.lang
     const url = `https://api.dictionaryapi.dev/api/v2/entries/${lang}/${this.stem}`
     try {
-      const res: {data: {word: string, phonetics: [{text: string, audio: string}], meanings: []}[]} = await axios.get(url)
+      const res: apiResponseType = await axios.get(url)
 
       const wordInfos: WordInfo[] = []
       res.data.forEach(item => {

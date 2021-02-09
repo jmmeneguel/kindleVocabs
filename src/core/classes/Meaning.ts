@@ -6,6 +6,6 @@ export class Meaning {
 
   constructor (meaning: {partOfSpeech: string, definition: Definition}) {
     this.partOfSpeech = meaning.partOfSpeech
-    this.definition = meaning.definition
+    this.definition = new Definition(meaning.definition)
   }
 }
