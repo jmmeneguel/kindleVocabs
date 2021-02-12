@@ -5,15 +5,27 @@
 
 import { openDB } from 'idb'
 
-const storeNames = ['lookUps', 'bookInfo', 'words']
-
 async function getDb (dbName: string) {
   return await openDB(dbName, 1, {
     upgrade (db: { createObjectStore: (arg0: string) => any }) {
       // Create a store of objects
-      storeNames.forEach(storeName => {
-        db.createObjectStore(storeName)
-      })
+      const bookInfoStore = db.createObjectStore('bookInfo')
+      bookInfoStore.createIndex('id', 'id')
+      bookInfoStore.createIndex('lang', 'lang')
+
+      const lookUpStore = db.createObjectStore('lookUps')
+      lookUpStore.createIndex('id', 'id')
+      lookUpStore.createIndex('wordId', 'wordId')
+      lookUpStore.createIndex('bookId', 'bookId')
+      lookUpStore.createIndex('timestamp', 'timestamp')
+
+      const meaningStore = db.createObjectStore('words')
+      meaningStore.createIndex('id', 'id')
+      meaningStore.createIndex('lang', 'lang')
+
+      const trainingDataStore = db.createObjectStore('trainingData')
+      trainingDataStore.createIndex('id', 'id')
+      trainingDataStore.createIndex('interval', 'interval')
     }
   })
 }
@@ -37,9 +49,8 @@ export async function writeToIndexedDb (data: any, dbName: string, storeName: st
   await Promise.all(putPromises).catch(err => console.log(err))
 }
 
-export async function getIndexedDbEntry (dbName: string, storeName:string, key: string) {
+export async function getIndexedDbEntry (dbName: string, storeName:string, indexName: string, key: string) {
   const db = await getDb(dbName)
-  const store = db.transaction(storeName).objectStore(storeName)
-  const value = await store.get(key)
+  const value = await db.getAllFromIndex(storeName, indexName, key)
   return value
 }

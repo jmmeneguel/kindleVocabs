@@ -9,7 +9,7 @@
 </template>
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-// import { importDbFile } from 'src/core/func/importDbFile'
+import { importDbFile } from 'src/core/func/importDbFile'
 
 export default defineComponent({
   name: 'App',
@@ -20,8 +20,7 @@ export default defineComponent({
   },
   methods: {
     clicked (file: Blob) {
-      console.log('clicked')
-      // importDbFile(file).catch(err => console.log(err))
+      importDbFile(file).catch(err => console.log(err))
     }
   }
 })

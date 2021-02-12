@@ -2,8 +2,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { Database } from '../readDbFile/readDbFile'
 import { writeToIndexedDb, getIndexedDbEntry } from '../manageIndexedDb/manageIndexedDb'
-import { WordEntry } from '../classes/WordEntry'
 import { LookUp } from '../classes/LookUp'
+import { Word } from '../classes/Word'
+import { TrainingData } from '../classes/TrainingData'
 import { getMeaning } from '../func/apiRequest'
 
 export async function importDbFile(filePath: Blob) {
@@ -12,28 +13,40 @@ export async function importDbFile(filePath: Blob) {
   const bookInfo: any = await db.readTable(filePath, 'BOOK_INFO')
   let words: any = await db.readTable(filePath, 'WORDS')
 
-  const wordEntries: WordEntry[] = []
+  const lookUpEntries: LookUp[] = []
   lookUps.forEach((item: LookUp) => {
-    wordEntries.push(new WordEntry(item))
+    lookUpEntries.push(new LookUp(item))
   })
 
-  const p1 = writeToIndexedDb(wordEntries, 'database', 'lookUps', false).catch(err => console.log(err))
+  const wordEntries: Word[] = []
+  const trainingDataEntries: TrainingData[] = []
+  words.forEach((item: Word) => {
+    wordEntries.push(new Word(item))
+    trainingDataEntries.push(new TrainingData(item.id))
+  })
+
+  const p1 = writeToIndexedDb(lookUpEntries, 'database', 'lookUps', false).catch(err => console.log(err))
   const p2 = writeToIndexedDb(bookInfo, 'database', 'bookInfo', false).catch(err => console.log(err))
-  const p3 = writeToIndexedDb(words, 'database', 'words', false).catch(err => console.log(err))
+  const p3 = writeToIndexedDb(wordEntries, 'database', 'words', false).catch(err => console.log(err))
+  const p4 = writeToIndexedDb(trainingDataEntries, 'database', 'trainingData', false).catch(err => console.log(err))
 
-  await Promise.all([p1, p2, p3])
+  await Promise.all([p1, p2, p3, p4])
 
-  words.forEach(element => {
-    getMeaning(element)
-      .then(res => {
-        getIndexedDbEntry('database', 'words', res.id)
-          .then(entry => {
-            entry.meaning = res.meaning
-            writeToIndexedDb([entry], 'database', 'words', true)
-              .catch(err => console.log(err))
-          })
-          .catch(err => console.log(err))
-      })
-      .catch(err => console.log(err))
-  })
+  getIndexedDbEntry('database', 'words', 'lang', 'de')
+    .then(res => console.log(res))
+    .catch(err => console.log(err))
+
+  // words.forEach(element => {
+  //   getMeaning(element)
+  //     .then(res => {
+  //       getIndexedDbEntry('database', 'words', res.id)
+  //         .then(entry => {
+  //           entry.meaning = res.meaning
+  //           writeToIndexedDb([entry], 'database', 'words', true)
+  //             .catch(err => console.log(err))
+  //         })
+  //         .catch(err => console.log(err))
+  //     })
+  //     .catch(err => console.log(err))
+  // })
 }
