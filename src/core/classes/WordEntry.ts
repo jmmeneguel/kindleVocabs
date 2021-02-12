@@ -4,9 +4,11 @@ import { TrainingData } from './TrainingData'
 export class WordEntry {
   lookUp: LookUp
   trainingData: TrainingData
+  id: string
 
-  constructor (lookUp: LookUp, trainingData: TrainingData) {
-    this.lookUp = lookUp
-    this.trainingData = trainingData
+  constructor (lookUp: LookUp) {
+    this.id = lookUp.id
+    this.lookUp = new LookUp(lookUp)
+    this.trainingData = new TrainingData()
   }
 }

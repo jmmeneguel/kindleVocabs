@@ -6,10 +6,10 @@ export class TrainingData {
   interval: number
   attemptHistory: Attempt[]
 
-  constructor (repetitionNumber: number, easinessFactor: number, interval: number) {
-    this.repetitionNumber = repetitionNumber
-    this.easinessFactor = easinessFactor
-    this.interval = interval
+  constructor () {
+    this.repetitionNumber = 0
+    this.easinessFactor = 2.5
+    this.interval = 0
     this.attemptHistory = []
   }
 
