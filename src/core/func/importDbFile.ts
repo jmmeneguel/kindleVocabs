@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { Database } from '../readDbFile/readDbFile'
-import { writeToIndexedDb } from '../manageIndexedDb/manageIndexedDb'
+import { writeToIndexedDb, getIndexedDbEntry } from '../manageIndexedDb/manageIndexedDb'
 import { WordEntry } from '../classes/WordEntry'
 import { LookUp } from '../classes/LookUp'
 import { getMeaning } from '../func/apiRequest'
@@ -17,11 +17,23 @@ export async function importDbFile(filePath: Blob) {
     wordEntries.push(new WordEntry(item))
   })
 
-  writeToIndexedDb(wordEntries, 'database', 'lookUps', false).catch(err => console.log(err))
-  writeToIndexedDb(bookInfo, 'database', 'bookInfo', false).catch(err => console.log(err))
-  writeToIndexedDb(words, 'database', 'words', false).catch(err => console.log(err))
+  const p1 = writeToIndexedDb(wordEntries, 'database', 'lookUps', false).catch(err => console.log(err))
+  const p2 = writeToIndexedDb(bookInfo, 'database', 'bookInfo', false).catch(err => console.log(err))
+  const p3 = writeToIndexedDb(words, 'database', 'words', false).catch(err => console.log(err))
 
-  getMeaning(words[0]).then(res => console.log(res)).catch(err => console.log(err))
-    .then(res => console.log(res))
-    .catch(err => console.log(err))
+  await Promise.all([p1, p2, p3])
+
+  words.forEach(element => {
+    getMeaning(element)
+      .then(res => {
+        getIndexedDbEntry('database', 'words', res.id)
+          .then(entry => {
+            entry.meaning = res.meaning
+            writeToIndexedDb([entry], 'database', 'words', true)
+              .catch(err => console.log(err))
+          })
+          .catch(err => console.log(err))
+      })
+      .catch(err => console.log(err))
+  })
 }

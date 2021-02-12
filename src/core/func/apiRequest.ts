@@ -11,8 +11,6 @@ export async function getMeaning (word) {
   try {
     const res: apiResponseType = await axios.get(url)
 
-    console.log(res)
-
     const wordInfos: WordInfo[] = []
     res.data.forEach(item => {
       const phonetics: PhoneticInfo[] = []
@@ -34,7 +32,8 @@ export async function getMeaning (word) {
     word.wordInfos = wordInfos
     return ({
       id: word.id,
-      success: true
+      success: true,
+      meaning: wordInfos
     })
   } catch (e) {
     console.log(e)

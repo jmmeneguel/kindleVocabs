@@ -29,12 +29,8 @@ export async function writeToIndexedDb (data: any, dbName: string, storeName: st
       promise = db.put(storeName, item, item.id)
       putPromises.push(promise)
     } else {
-      try {
-        promise = db.add(storeName, item, item.id)
-        putPromises.push(promise)
-      } catch {
-        console.log('won\'t replace')
-      }
+      promise = db.add(storeName, item, item.id).catch(() => {})
+      putPromises.push(promise)
     }
   })
 
