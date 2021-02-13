@@ -1,3 +1,11 @@
+interface bookInfoInterface {
+  id: string
+  asin: string
+  lang: string
+  title: string
+  authors: string
+}
+
 export class BookInfo {
   id: string
   asin: string
@@ -5,7 +13,7 @@ export class BookInfo {
   title: string
   authors: string
 
-  constructor (bookInfo: {id: string, asin: string, lang: string, title: string, authors: string}) {
+  constructor (bookInfo: bookInfoInterface) {
     this.id = bookInfo.id
     this.asin = bookInfo.asin
     this.lang = bookInfo.lang

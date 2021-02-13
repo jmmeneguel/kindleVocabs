@@ -1,7 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 import { openDB } from 'idb'
 
@@ -41,7 +42,7 @@ export async function writeToIndexedDb (data: any, dbName: string, storeName: st
       promise = db.put(storeName, item, item.id)
       putPromises.push(promise)
     } else {
-      promise = db.add(storeName, item, item.id).catch(() => {})
+      promise = db.add(storeName, item, item.id).catch()
       putPromises.push(promise)
     }
   })

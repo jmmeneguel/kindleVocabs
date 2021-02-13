@@ -1,5 +1,12 @@
-import { PhoneticInfo } from './PhoneticInfo'
-import { Meaning } from './Meaning'
+import { PhoneticInfo, phoneticInfoInterface } from './PhoneticInfo'
+import { Meaning, meaningInterface } from './Meaning'
+
+export interface wordInfoInterface {
+  word: string
+  phoneticInfo: phoneticInfoInterface[]
+  meaning: meaningInterface[]
+  timestamp?: Date
+}
 
 export class WordInfo {
   word: string
@@ -7,10 +14,10 @@ export class WordInfo {
   meaning: Meaning[]
   timestamp: Date
 
-  constructor (word: string, phoneticInfo: PhoneticInfo[], meaning: Meaning[]) {
-    this.word = word
-    this.phoneticInfo = phoneticInfo
-    this.meaning = meaning
-    this.timestamp = new Date()
+  constructor (wordInfo: wordInfoInterface) {
+    this.word = wordInfo.word
+    this.phoneticInfo = wordInfo.phoneticInfo
+    this.meaning = wordInfo.meaning
+    this.timestamp = wordInfo.timestamp || new Date()
   }
 }

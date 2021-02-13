@@ -1,5 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { kindleLookUpType } from '../readDbFile/readDbFile'
+export interface lookUpInterface {
+  id: string
+  wordId: string
+  bookId: string
+  context: string
+  timestamp: Date
+}
 export class LookUp {
   id: string
   wordId: string
@@ -7,11 +12,11 @@ export class LookUp {
   context: string
   timestamp: Date
 
-  constructor (lookUp: kindleLookUpType) {
+  constructor (lookUp: lookUpInterface) {
     this.id = lookUp.id
-    this.wordId = lookUp.word_key
-    this.bookId = lookUp.book_key
-    this.context = lookUp.usage
-    this.timestamp = new Date(lookUp.timestamp)
+    this.wordId = lookUp.wordId
+    this.bookId = lookUp.bookId
+    this.context = lookUp.context
+    this.timestamp = lookUp.timestamp
   }
 }

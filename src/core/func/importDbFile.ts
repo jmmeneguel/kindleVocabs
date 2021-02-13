@@ -1,28 +1,33 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-import { Database } from '../readDbFile/readDbFile'
-import { writeToIndexedDb, getIndexedDbEntry } from '../manageIndexedDb/manageIndexedDb'
-import { LookUp } from '../classes/LookUp'
-import { Word } from '../classes/Word'
-import { TrainingData } from '../classes/TrainingData'
-import { getMeaning } from '../func/apiRequest'
+import { writeToIndexedDb, getIndexedDbEntry } from './manageIndexedDb'
+import { LookUp, lookUpInterface } from '../classes/LookUp'
+import { Word, wordInterface } from '../classes/Word'
+import { TrainingData, trainingDataInterface } from '../classes/TrainingData'
+import { Database, kindleLookUpType, kindleWordType, kindleBookInfoType } from './readDbFile'
 
-export async function importDbFile(filePath: Blob) {
+export async function importDbFile (filePath: Blob) {
   const db = new Database()
-  let lookUps: any = await db.readTable(filePath, 'LOOKUPS')
-  const bookInfo: any = await db.readTable(filePath, 'BOOK_INFO')
-  let words: any = await db.readTable(filePath, 'WORDS')
+  const lookUps: kindleLookUpType[] = <kindleLookUpType[]> await db.readTable(filePath, 'LOOKUPS')
+  const bookInfo: kindleBookInfoType[] = <kindleBookInfoType[]> await db.readTable(filePath, 'BOOK_INFO')
+  const words: kindleWordType[] = <kindleWordType[]> await db.readTable(filePath, 'WORDS')
 
-  const lookUpEntries: LookUp[] = []
-  lookUps.forEach((item: LookUp) => {
-    lookUpEntries.push(new LookUp(item))
+  const lookUpEntries: lookUpInterface[] = []
+  lookUps.forEach((item) => {
+    const element: lookUpInterface = {
+      id: item.id,
+      wordId: item.word_key,
+      bookId: item.book_key,
+      context: item.usage,
+      timestamp: new Date(item.timestamp)
+    }
+    lookUpEntries.push(new LookUp(element))
   })
 
   const wordEntries: Word[] = []
   const trainingDataEntries: TrainingData[] = []
-  words.forEach((item: Word) => {
+  words.forEach((item: wordInterface) => {
     wordEntries.push(new Word(item))
-    trainingDataEntries.push(new TrainingData(item.id))
+    const trainingDataData: trainingDataInterface = { id: item.id }
+    trainingDataEntries.push(new TrainingData(trainingDataData))
   })
 
   const p1 = writeToIndexedDb(lookUpEntries, 'database', 'lookUps', false).catch(err => console.log(err))
@@ -35,18 +40,4 @@ export async function importDbFile(filePath: Blob) {
   getIndexedDbEntry('database', 'words', 'lang', 'de')
     .then(res => console.log(res))
     .catch(err => console.log(err))
-
-  // words.forEach(element => {
-  //   getMeaning(element)
-  //     .then(res => {
-  //       getIndexedDbEntry('database', 'words', res.id)
-  //         .then(entry => {
-  //           entry.meaning = res.meaning
-  //           writeToIndexedDb([entry], 'database', 'words', true)
-  //             .catch(err => console.log(err))
-  //         })
-  //         .catch(err => console.log(err))
-  //     })
-  //     .catch(err => console.log(err))
-  // })
 }

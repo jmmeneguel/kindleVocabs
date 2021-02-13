@@ -1,18 +1,37 @@
-import { WordInfo } from './WordInfo'
-import { kindleWordType } from '../readDbFile/readDbFile'
+import { wordInfoInterface } from './WordInfo'
+import { getMeaning } from '../func/apiRequest'
 
+export interface wordInterface {
+  id: string
+  word: string
+  stem: string
+  lang: string
+  wordInfo?: wordInfoInterface[]
+}
 export class Word {
   id: string
   word: string
   stem: string
   lang: string
-  wordInfo: WordInfo
+  wordInfo?: wordInfoInterface[]
 
-  constructor (word: kindleWordType) {
+  constructor (word: wordInterface) {
     this.id = word.id
     this.word = word.word
     this.stem = word.stem
     this.lang = word.lang
-    this.wordInfo = null
+    if ('wordInfo' in word) {
+      this.wordInfo = word.wordInfo || []
+    } else {
+      if (this.id === 'en:stout') {
+        getMeaning(this)
+          .then(res => {
+            this.wordInfo = res
+            console.log(res)
+            // IMPLEMENTAR: Atualizar a base dados
+          })
+          .catch(err => console.log(err))
+      }
+    }
   }
 }

@@ -1,10 +1,4 @@
-/* eslint-disable camelcase */
-/* eslint-disable no-var */
-/* eslint-disable no-undef */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable */
 import * as initSqlJs from 'sql.js'
 
 let SQL: { Database: new (arg0: Uint8Array) => any }
@@ -29,6 +23,15 @@ export interface kindleWordType {
   profileid: string
 }
 
+export interface kindleBookInfoType {
+  id: string,
+  asin: string,
+  guid: string,
+  lang: string,
+  title: string,
+  authors: string
+}
+
 export class Database {
   async startDatabase () {
     SQL = await initSqlJs({
@@ -44,7 +47,7 @@ export class Database {
     return new Promise((resolve) => {
       const r = new FileReader()
       r.onload = function () {
-        const Uints = new Uint8Array(r.result)
+        const Uints = new Uint8Array(<ArrayBufferLike> r.result)
         const db = new SQL.Database(Uints)
         var response = db.prepare(`SELECT * FROM ${tableName}`)
         for (var result = []; response.step();) result.push(response.getAsObject())

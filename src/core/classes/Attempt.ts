@@ -1,9 +1,14 @@
+export interface attemptInterface {
+  timestamp?: Date
+  userGrade: number
+}
+
 export class Attempt {
   timestamp: Date
   userGrade: number
 
-  constructor (userGrade: number) {
-    this.userGrade = userGrade
-    this.timestamp = new Date()
+  constructor (attempt: attemptInterface) {
+    this.userGrade = attempt.userGrade
+    this.timestamp = attempt.timestamp || new Date()
   }
 }

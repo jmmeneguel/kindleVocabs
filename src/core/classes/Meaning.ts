@@ -1,13 +1,17 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-import { Definition } from './Definition'
+import { Definition, definitionInterface } from './Definition'
+
+export interface meaningInterface {
+  partOfSpeech: string
+  definitions: definitionInterface[]
+}
 
 export class Meaning {
   partOfSpeech: string
-  definitions: []
+  definitions: definitionInterface[]
 
-  constructor (meaning: {partOfSpeech: string, definitions: Definition[]}) {
+  constructor (meaning: meaningInterface) {
     this.partOfSpeech = meaning.partOfSpeech
-    const definitions = []
+    const definitions: definitionInterface[] = []
     meaning.definitions.forEach(item => {
       definitions.push(new Definition(item))
     })
