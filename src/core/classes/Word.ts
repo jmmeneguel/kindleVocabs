@@ -14,7 +14,7 @@ export class Word {
   word: string
   stem: string
   lang: string
-  wordInfo?: wordInfoInterface[]
+  wordInfo?: WordInfo[]
 
   constructor (word: wordInterface) {
     this.id = word.id
@@ -22,20 +22,25 @@ export class Word {
     this.stem = word.stem
     this.lang = word.lang
     if ('wordInfo' in word) {
-      this.wordInfo = word.wordInfo || []
+      this.wordInfo = <WordInfo[]><unknown> word.wordInfo || []
     } else {
       console.log('Searching for ' + this.stem)
       getMeaning(this)
         .then(res => {
-          const wordInfos: WordInfo[] = []
-          res.forEach(wordInfoData => {
-            wordInfos.push(new WordInfo(wordInfoData))
-          })
-
-          this.wordInfo = wordInfos
+          if (res.length > 0) {
+            const wordInfos: WordInfo[] = []
+            res.forEach(wordInfoData => {
+              wordInfos.push(new WordInfo(wordInfoData))
+            })
+            this.wordInfo = wordInfos
+          } else {
+            this.wordInfo = [new WordInfo()]
+          }
           writeToIndexedDb([this], 'database', 'words', true).catch(err => console.log(err))
         })
-        .catch(err => console.log(err))
+        .catch((err) => {
+          console.error(err)
+        })
     }
   }
 }

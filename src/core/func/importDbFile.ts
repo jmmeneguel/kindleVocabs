@@ -38,7 +38,7 @@ export async function importDbFile (filePath: Blob) {
     }
   })
 
-  const wordEntries: wordInterface[] = []
+  const wordEntries: Word[] = []
   const trainingDataEntries: TrainingData[] = []
   for (const item of words) {
     if (!dbWords.includes(item.id)) {
