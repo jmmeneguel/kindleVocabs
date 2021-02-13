@@ -1,4 +1,4 @@
-interface bookInfoInterface {
+export interface bookInfoInterface {
   id: string
   asin: string
   lang: string

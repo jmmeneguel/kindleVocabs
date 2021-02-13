@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Meaning, meaningInterface } from '../classes/Meaning'
 import { PhoneticInfo, phoneticInfoInterface } from '../classes/PhoneticInfo'
-import { WordInfo, wordInfoInterface } from '../classes/WordInfo'
+import { wordInfoInterface } from '../classes/WordInfo'
 import { Word } from '../classes/Word'
 
 interface apiResponseType { data: { word: string, phonetics: phoneticInfoInterface[], meanings: meaningInterface[] }[] }
@@ -25,8 +25,7 @@ export async function getMeaning (word: Word) {
       meanings.push(meaning)
     })
     const wordInfoData: wordInfoInterface = { word: item.word, phoneticInfo: phonetics, meaning: meanings }
-    const wordInfo = new WordInfo(wordInfoData)
-    wordInfos.push(wordInfo)
+    wordInfos.push(wordInfoData)
   })
   return wordInfos
 }

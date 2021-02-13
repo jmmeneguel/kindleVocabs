@@ -1,5 +1,6 @@
-import { wordInfoInterface } from './WordInfo'
+import { WordInfo, wordInfoInterface } from './WordInfo'
 import { getMeaning } from '../func/apiRequest'
+import { writeToIndexedDb } from '../func/manageIndexedDb'
 
 export interface wordInterface {
   id: string
@@ -23,15 +24,18 @@ export class Word {
     if ('wordInfo' in word) {
       this.wordInfo = word.wordInfo || []
     } else {
-      if (this.id === 'en:stout') {
-        getMeaning(this)
-          .then(res => {
-            this.wordInfo = res
-            console.log(res)
-            // IMPLEMENTAR: Atualizar a base dados
+      console.log('Searching for ' + this.stem)
+      getMeaning(this)
+        .then(res => {
+          const wordInfos: WordInfo[] = []
+          res.forEach(wordInfoData => {
+            wordInfos.push(new WordInfo(wordInfoData))
           })
-          .catch(err => console.log(err))
-      }
+
+          this.wordInfo = wordInfos
+          writeToIndexedDb([this], 'database', 'words', true).catch(err => console.log(err))
+        })
+        .catch(err => console.log(err))
     }
   }
 }

@@ -50,8 +50,21 @@ export async function writeToIndexedDb (data: any, dbName: string, storeName: st
   await Promise.all(putPromises).catch(err => console.log(err))
 }
 
+export async function gellAllKeys (dbName: string, storeName:string) {
+  const db = await getDb(dbName)
+  const values = await db.getAllKeys(storeName)
+  return values
+}
+
 export async function getIndexedDbEntry (dbName: string, storeName:string, indexName: string, key: string) {
   const db = await getDb(dbName)
   const value = await db.getAllFromIndex(storeName, indexName, key)
+  return value
+}
+
+export async function getEntryByKey (dbName: string, storeName:string, key: string) {
+  const db = await getDb(dbName)
+  const store = db.transaction(storeName).objectStore(storeName)
+  const value = await store.get(key)
   return value
 }
