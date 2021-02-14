@@ -59,16 +59,10 @@ export async function importDbFile (filePath: Blob) {
     }
   })
 
-  console.log(lookUpEntries.length, bookInfoEntries.length, wordEntries.length, trainingDataEntries.length)
-
   const p7 = writeToIndexedDb(lookUpEntries, 'database', 'lookUps', false).catch(err => console.log(err))
   const p8 = writeToIndexedDb(bookInfoEntries, 'database', 'bookInfo', false).catch(err => console.log(err))
   const p9 = writeToIndexedDb(wordEntries, 'database', 'words', false).catch(err => console.log(err))
   const p10 = writeToIndexedDb(trainingDataEntries, 'database', 'trainingData', false).catch(err => console.log(err))
 
   await Promise.all([p7, p8, p9, p10])
-
-  getIndexedDbEntry('database', 'words', 'lang', 'de')
-    .then(res => console.log(res))
-    .catch(err => console.log(err))
 }
