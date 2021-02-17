@@ -52,7 +52,7 @@ export async function writeToIndexedDb (data: any, dbName: string, storeName: st
 
 export async function gellAllKeys (dbName: string, storeName:string) {
   const db = await getDb(dbName)
-  const values = await db.getAllKeys(storeName)
+  const values = await db.getAll(storeName)
   return values
 }
 
@@ -67,4 +67,17 @@ export async function getEntryByKey (dbName: string, storeName:string, key: stri
   const store = db.transaction(storeName).objectStore(storeName)
   const value = await store.get(key)
   return value
+}
+
+export async function getAllTables () {
+  const p1 = gellAllKeys('database', 'words')
+  const p2 = gellAllKeys('database', 'lookUps')
+  const p3 = gellAllKeys('database', 'bookInfo')
+  const p4 = gellAllKeys('database', 'trainingData')
+
+  await Promise.all([p1, p2, p3, p4])
+    .then(res => {
+      return res
+    })
+    .catch(err => console.log(err))
 }
