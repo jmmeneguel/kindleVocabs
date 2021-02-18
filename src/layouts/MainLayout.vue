@@ -64,7 +64,7 @@ const linksData = [
   },
   {
     title: 'Add vocabs',
-    route: '/'
+    route: '/add'
   },
   {
     title: 'About us',

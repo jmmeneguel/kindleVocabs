@@ -6,6 +6,7 @@ const routes: RouteConfig[] = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/Home.vue') },
+      { path: 'add', component: () => import('pages/AddVocabs.vue') },
       { path: 'browser', component: () => import('pages/VocabBrowser.vue') }
     ]
   },

@@ -13,13 +13,7 @@ interface entryInterface {
 
 const getters: GetterTree<databaseStateInterface, StateInterface> = {
   formatedEntries (state): entryInterface[] {
-    return [{
-      word: 'Abbildung',
-      stem: 'Abbildung',
-      wordInfo: [],
-      context: ['Abbildung'],
-      status: 'New'
-    }]
+    return state
   }
 }
 

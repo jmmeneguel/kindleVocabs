@@ -2,7 +2,7 @@
   <div class="row items-center justify-evenly">
     <q-table
       title=""
-      :data="data"
+      :data="data.words"
       :columns="columns"
       row-key="name"
     >
@@ -29,20 +29,20 @@
           </span>
         </q-td>
 
-        <q-td>
-          <MeaningColumn v-bind:wordInfo="props.row['wordInfo']" />
+        <q-td style="width: 200px">
+          <MeaningColumn v-bind:meaning="props.row['meaning']" />
+        </q-td>
+
+        <q-td style="width: 100px">
+          <ContextColumn v-bind:lookUps="props.row['lookUps']" :books="data.books" />
         </q-td>
 
         <q-td>
-          <ContextColumn v-bind:context="props.row['context']" />
+          
         </q-td>
 
         <q-td>
-          Status
-        </q-td>
-
-        <q-td>
-          Action
+          
         </q-td>
       </q-tr>
     </q-table>
@@ -66,35 +66,35 @@ export default defineComponent({
           label: 'Word',
           required: true,
           align: 'center',
-          sortable: true,
+          sortable: true
         },
         {
           name: 'meaning',
           label: 'Meaning',
           required: true,
           align: 'center',
-          sortable: true,
+          sortable: true
         },
         {
           name: 'context',
           label: 'Context',
           required: true,
           align: 'center',
-          sortable: true,
+          sortable: true
         },
         {
           name: 'status',
           label: 'Status',
           required: true,
           align: 'center',
-          sortable: true,
+          sortable: true
         },
         {
           name: 'action',
           label: 'Action',
           required: true,
           align: 'center',
-          sortable: true,
+          sortable: true
         }
       ]
     }
