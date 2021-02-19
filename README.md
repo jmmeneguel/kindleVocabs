@@ -1,6 +1,6 @@
 # VocabsTrainer (vocabstrainer)
 
-A vocabulary trainer.
+A vocabulary trainer based on your kindle lookups.
 
 ## Install the dependencies
 ```bash
