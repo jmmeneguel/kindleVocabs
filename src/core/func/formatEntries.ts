@@ -14,6 +14,7 @@ export async function getFormatedEntries () {
     const entry: databaseStateInterface = {
       word: item.word,
       stem: item.stem,
+      lang: item.lang,
       meaning: item.wordInfo,
       lookUps: undefined,
       trainingData: undefined

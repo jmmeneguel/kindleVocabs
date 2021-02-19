@@ -1,103 +1,99 @@
 <template>
   <div class="row items-center justify-evenly">
-    <q-table
-      title=""
-      :data="data.words"
-      :columns="columns"
-      row-key="name"
-    >
-      <q-tr
-        slot="header"
-        slot-scope="props">
-        <q-th
-          v-for="col in props.cols"
-          :key="col.name"
-          :props="props">
+    <q-table title="" :data="data.words" :columns="columns" row-key="name">
+      <q-tr slot="header" slot-scope="props">
+        <q-th v-for="col in props.cols" :key="col.name" :props="props">
           {{ col.label }}
         </q-th>
       </q-tr>
-      <q-tr
-        slot="body"
-        slot-scope="props"
-        :props="props"
-      >
+      <q-tr slot="body" slot-scope="props" :props="props">
         <q-td>
           <span class="row justify-center items-center full-height full-width">
             <span>
-              {{ props.row['stem'] }}
+              {{ props.row["stem"] }}
             </span>
           </span>
         </q-td>
 
-        <q-td style="width: 200px">
+        <q-td>
+          {{ props.row["lang"] }}
+        </q-td>
+
+        <q-td style="width: 400px">
           <MeaningColumn v-bind:meaning="props.row['meaning']" />
         </q-td>
 
         <q-td style="width: 100px">
-          <ContextColumn v-bind:lookUps="props.row['lookUps']" :books="data.books" />
+          <ContextColumn
+            v-bind:lookUps="props.row['lookUps']"
+            :books="data.books"
+          />
         </q-td>
 
-        <q-td>
-          
-        </q-td>
+        <q-td> </q-td>
 
-        <q-td>
-          
-        </q-td>
+        <q-td> </q-td>
       </q-tr>
     </q-table>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
-import MeaningColumn from './MeaningColumn.vue'
-import ContextColumn from './ContextColumn.vue'
+import { defineComponent } from "@vue/composition-api";
+import MeaningColumn from "./MeaningColumn.vue";
+import ContextColumn from "./ContextColumn.vue";
 
 export default defineComponent({
-  name: 'VocabsTable',
-  props: ['data'],
+  name: "VocabsTable",
+  props: ["data"],
   components: { MeaningColumn, ContextColumn },
-  data () {
+  data() {
     return {
       columns: [
         {
-          name: 'word',
-          label: 'Word',
+          name: "word",
+          label: "Word",
           required: true,
-          align: 'center',
+          align: "center",
           sortable: true
         },
         {
-          name: 'meaning',
-          label: 'Meaning',
+          name: "lang",
+          label: "Language",
           required: true,
-          align: 'center',
+          align: "center",
           sortable: true
         },
         {
-          name: 'context',
-          label: 'Context',
+          name: "meaning",
+          label: "Meaning",
           required: true,
-          align: 'center',
+          align: "center",
           sortable: true
         },
         {
-          name: 'status',
-          label: 'Status',
+          name: "context",
+          label: "Context",
           required: true,
-          align: 'center',
+          align: "center",
           sortable: true
         },
         {
-          name: 'action',
-          label: 'Action',
+          name: "status",
+          label: "Status",
           required: true,
-          align: 'center',
+          align: "center",
+          sortable: true
+        },
+        {
+          name: "action",
+          label: "Action",
+          required: true,
+          align: "center",
           sortable: true
         }
       ]
-    }
+    };
   }
-})
+});
 </script>
