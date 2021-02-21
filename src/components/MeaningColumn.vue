@@ -1,21 +1,31 @@
 <template>
   <div class="meaning row items-center justify-evenly">
-    <div class="q-pa-lg" v-for="(item, meaningId) in meaning" :key="meaningId">
-      <div class="header">
-        <div>{{ item.word }}</div>
-        <div
-          v-for="(phoneticInfo, phoneticId) in item.phoneticInfo"
-          :key="phoneticId"
-        >
-          {{ phoneticInfo.text }} {{ phoneticInfo.audio }}
+    <div class="q-pa-sm" v-for="(item, meaningId) in meaning" :key="meaningId">
+      <div class="header column items-center">
+        <div v-if="item.word !== stem || meaning.length > 1" class="col text-primary">{{ item.word }}</div>
+        <div class="col" v-if="lang === 'en'">
+          <span
+            class="text-center"
+            v-for="(phoneticInfo, phoneticId) in item.phoneticInfo"
+            :key="phoneticId"
+          >
+            <q-btn
+              flat
+              no-caps
+              :label="phoneticInfo.text"
+              color="primary"
+              padding="xs"
+              @click="play(phoneticInfo.audio)"
+            />
+          </span>
         </div>
       </div>
       <div class="meanings">
         <div v-for="(wMeaning, wMeaningId) in item.meaning" :key="wMeaningId">
-          <div>
+          <div class="text-center text-overline text-uppercase">
             {{ wMeaning.partOfSpeech }}
           </div>
-          <div class="q-pa-md" style="max-width: 350px">
+          <div style="max-width: 350px">
             <q-list class="rounded-borders">
               <q-expansion-item
                 v-for="(definition, defId) in wMeaning.definitions"
@@ -26,10 +36,18 @@
                 <q-card>
                   <q-card-section>
                     <div class="example">
-                      {{definition.example}}
+                      {{ definition.example }}
                     </div>
-                    <div v-if="definition.synonyms.length > 0" class="synonyms">
-                      {{definition.synonyms}}
+                    <div v-if="definition.synonyms.length > 0 || false" class="synonyms">
+                      <q-chip
+                        v-for="(synonym, synonymId ) in definition.synonyms"
+                        :key="synonymId"
+                        size="11px"
+                        color="primary"
+                        text-color="white"
+                      >
+                        {{ synonym }}
+                      </q-chip>
                     </div>
                   </q-card-section>
                 </q-card>
@@ -38,7 +56,6 @@
           </div>
         </div>
       </div>
-      <q-separator />
     </div>
   </div>
 </template>
@@ -48,7 +65,13 @@ import { defineComponent } from "@vue/composition-api";
 
 export default defineComponent({
   name: "MeaningColumn",
-  props: ["meaning"]
+  props: ["meaning", "lang", "stem"],
+  methods: {
+    play(url) {
+      const audio = new Audio(url);
+      audio.play();
+    }
+  }
 });
 </script>
 <style scoped lang="sass">

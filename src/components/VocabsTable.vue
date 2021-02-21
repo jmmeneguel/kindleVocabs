@@ -9,18 +9,40 @@
       <q-tr slot="body" slot-scope="props" :props="props">
         <q-td>
           <span class="row justify-center items-center full-height full-width">
-            <span>
+            <span class="q-pr-xs">
               {{ props.row["stem"] }}
             </span>
+            <span v-if="props.row['lang'] === 'de'">
+              <q-img
+                :src="'/flags/germany.png'"
+                spinner-color="white"
+                style="height: 15px; width: 16px;"
+              />
+            </span>
+            <span v-if="props.row['lang'] === 'en'">
+              <q-img
+                :src="'/flags/united-kingdom.png'"
+                spinner-color="white"
+                style="height: 15px; width: 16px;"
+              />
+            </span>
+            <span v-if="props.row['lang'] === 'pt'">
+              <q-img
+                :src="'/flags/brazil.png'"
+                spinner-color="white"
+                style="height: 15px; width: 16px;"
+              />
+            </span>
+
           </span>
         </q-td>
 
-        <q-td>
-          {{ props.row["lang"] }}
-        </q-td>
-
         <q-td style="width: 400px">
-          <MeaningColumn v-bind:meaning="props.row['meaning']" />
+          <MeaningColumn
+            :meaning="props.row['meaning']"
+            :lang="props.row['lang']"
+            :stem="props.row['stem']"
+          />
         </q-td>
 
         <q-td style="width: 100px">
@@ -58,13 +80,6 @@ export default defineComponent({
           sortable: true
         },
         {
-          name: "lang",
-          label: "Language",
-          required: true,
-          align: "center",
-          sortable: true
-        },
-        {
           name: "meaning",
           label: "Meaning",
           required: true,
@@ -94,6 +109,19 @@ export default defineComponent({
         }
       ]
     };
+  },
+  methods: {
+    flagPath(lang) {
+      let country;
+      if (lang === "de") {
+        country = "germany";
+      } else if (lang === "en") {
+        country = "united-kingdom";
+      } else if (lang === "pt-BR") {
+        country = "brazil";
+      }
+      return country;
+    }
   }
 });
 </script>

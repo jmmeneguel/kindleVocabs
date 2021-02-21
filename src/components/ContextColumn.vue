@@ -5,7 +5,7 @@
         <q-tooltip anchor="bottom middle" self="center middle" content-style="font-size: 12px">
           {{ getBookName(item) }}
         </q-tooltip>
-        <q-item-section>{{ item.context }}</q-item-section>
+        <q-item-section class="text-center">{{ item.context }}</q-item-section>
       </q-item>
     </q-list>
   </div>
