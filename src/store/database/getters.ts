@@ -14,6 +14,16 @@ interface entryInterface {
 const getters: GetterTree<databaseStateInterface, StateInterface> = {
   formatedEntries (state): entryInterface[] {
     return state
+  },
+  bookOptions (state) {
+    const bookOptions: string[] = []
+    state.books.forEach(item => {
+      bookOptions.push(item.title)
+    })
+    return bookOptions
+  },
+  languageOptions () {
+    return ["English", "German", "Portuguese"]
   }
 }
 

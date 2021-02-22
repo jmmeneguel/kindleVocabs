@@ -1,6 +1,6 @@
 <template>
-  <div class="row items-center justify-evenly">
-    <q-table title="" :data="data.words" :columns="columns" row-key="name">
+  <div>
+    <q-table class="my-sticky-header-table" title="" :data="data.words" :columns="columns" row-key="name">
       <q-tr slot="header" slot-scope="props">
         <q-th v-for="col in props.cols" :key="col.name" :props="props">
           {{ col.label }}
@@ -33,11 +33,10 @@
                 style="height: 15px; width: 16px;"
               />
             </span>
-
           </span>
         </q-td>
 
-        <q-td style="width: 400px">
+        <q-td style="width: 40%; max-width: 600px" >
           <MeaningColumn
             :meaning="props.row['meaning']"
             :lang="props.row['lang']"
@@ -45,7 +44,7 @@
           />
         </q-td>
 
-        <q-td style="width: 100px">
+        <q-td style="width: 20%">
           <ContextColumn
             v-bind:lookUps="props.row['lookUps']"
             :books="data.books"
@@ -54,7 +53,18 @@
 
         <q-td> </q-td>
 
-        <q-td> </q-td>
+        <q-td>
+          <q-btn dense flat round icon="create" size="11px">
+            <q-tooltip anchor="bottom middle" self="center middle">
+              Edit
+            </q-tooltip>
+          </q-btn>
+          <q-btn dense flat round icon="delete" size="11px">
+            <q-tooltip anchor="bottom middle" self="center middle">
+              Delete
+            </q-tooltip>
+          </q-btn>
+        </q-td>
       </q-tr>
     </q-table>
   </div>
@@ -102,26 +112,52 @@ export default defineComponent({
         },
         {
           name: "action",
-          label: "Action",
+          label: "",
           required: true,
           align: "center",
           sortable: true
         }
       ]
     };
-  },
-  methods: {
-    flagPath(lang) {
-      let country;
-      if (lang === "de") {
-        country = "germany";
-      } else if (lang === "en") {
-        country = "united-kingdom";
-      } else if (lang === "pt-BR") {
-        country = "brazil";
-      }
-      return country;
-    }
   }
 });
 </script>
+<style lang="sass">
+.q-table__container
+    max-height: 100%
+
+.q-table thead th
+    white-space: normal
+
+.q-table tbody td
+    white-space: normal
+
+.my-sticky-header-table
+  /* height or max-height is important */
+  max-height: 100%
+
+  .q-table__top,
+  .q-table__bottom,
+  thead tr:first-child th
+    /* bg color is important for th; just specify one */
+    background-color: #fff
+
+  thead tr th
+    position: sticky
+    z-index: 1
+  thead tr:first-child th
+    top: 0
+
+  /* this is when the loading indicator appears */
+  &.q-table--loading thead tr:last-child th
+    /* height of all previous header rows */
+    top: 48px
+
+.q-list:not(:last-child)
+  border-radius: 0
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12)
+
+.q-table__title
+  text-transform: uppercase
+
+</style>

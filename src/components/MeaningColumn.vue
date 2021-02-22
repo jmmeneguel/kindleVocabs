@@ -1,6 +1,6 @@
 <template>
-  <div class="meaning row items-center justify-evenly">
-    <div class="q-pa-sm" v-for="(item, meaningId) in meaning" :key="meaningId">
+  <div class="meaning row full-width items-center justify-evenly">
+    <div class="q-pa-sm full-width" v-for="(item, meaningId) in meaning" :key="meaningId">
       <div class="header column items-center">
         <div v-if="item.word !== stem || meaning.length > 1" class="col text-primary">{{ item.word }}</div>
         <div class="col" v-if="lang === 'en'">
@@ -25,20 +25,21 @@
           <div class="text-center text-overline text-uppercase">
             {{ wMeaning.partOfSpeech }}
           </div>
-          <div style="max-width: 350px">
+          <div>
             <q-list class="rounded-borders">
               <q-expansion-item
                 v-for="(definition, defId) in wMeaning.definitions"
                 separator
+                class="text-body2 text-center"
                 :label="definition.definition"
                 :key="defId"
               >
                 <q-card>
                   <q-card-section>
-                    <div class="example">
+                    <div class="example text-caption text-grey-9">
                       {{ definition.example }}
                     </div>
-                    <div v-if="definition.synonyms.length > 0 || false" class="synonyms">
+                    <div v-if="definition.synonyms && definition.synonyms.length > 0" class="synonyms">
                       <q-chip
                         v-for="(synonym, synonymId ) in definition.synonyms"
                         :key="synonymId"

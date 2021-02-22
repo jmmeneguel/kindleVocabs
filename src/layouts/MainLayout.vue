@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="lHh Lpr lFf" style="height: 100vh">
     <q-header elevated>
       <q-toolbar>
         <q-btn
@@ -40,7 +40,7 @@
       </q-list>
     </q-drawer>
 
-    <q-page-container>
+    <q-page-container class="full-height">
       <router-view />
     </q-page-container>
   </q-layout>
