@@ -1,16 +1,13 @@
 <template>
 <div>
-optionss: {{options}}
-filter: {{filter}}
-
   <q-select
     dense
     dark
     filled
-    v-model="filter"
+    v-model="selectFilter"
     multiple
     :options="options"
-    label="Language"
+    :label="label"
   >
     <template v-slot:option="scope">
       <q-item
@@ -29,11 +26,26 @@ filter: {{filter}}
     </template>
   </q-select>
 </div>
+  
 </template>
+
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
 
 export default defineComponent({
-  name: "MyQSelect",
-  props: ["options", "filter"]
+  name: "SpecialSelect",
+  props: ["options", "filter", "label"],
+  computed: {
+    selectFilter: {
+      // getter
+      get: function () {
+        return this.filter
+      },
+      // setter
+      set: function (newValue) {
+        this.$emit('update:filter', newValue)
+      }
+    }
+  }
 })
+</script>
