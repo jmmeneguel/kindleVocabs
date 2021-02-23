@@ -11,7 +11,7 @@ const actions: ActionTree<databaseStateInterface, StateInterface> = {
     const newState = await getFormatedEntries()
     this.commit('databaseModule/updateState', newState)
   },
-  async hideItem({ commit, state }, id) {
+  hideItem ({ commit, state }, id) {
     const wordIds = state.words.map((item) => item.id)
     const ind = wordIds.indexOf(id)
     this.commit('databaseModule/hideItem', ind)

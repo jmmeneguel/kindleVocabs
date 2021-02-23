@@ -54,12 +54,12 @@
         <q-td> </q-td>
 
         <q-td style="width: 90px">
-          <q-btn dense flat round icon="create" size="11px">
+          <q-btn dense flat round icon="create" size="11px" v-if="false">
             <q-tooltip anchor="bottom middle" self="center middle">
               Edit
             </q-tooltip>
           </q-btn>
-          <q-btn dense flat round icon="delete" size="11px" @click="hideItem(props.row['id'])">
+          <q-btn dense flat round icon="delete" size="11px" @click="rowId = props.row['id']; confirm = true">
             <q-tooltip anchor="bottom middle" self="center middle">
               Delete
             </q-tooltip>
@@ -67,6 +67,19 @@
         </q-td>
       </q-tr>
     </q-table>
+
+    <q-dialog v-model="confirm" persistent>
+      <q-card>
+        <q-card-section class="row items-center">
+          <span class="q-ml-sm">Do you really want to remove this entry?</span>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Cancel" color="primary" v-close-popup />
+          <q-btn flat label="Delete" color="primary" @click="hideItem(rowId)" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
@@ -82,6 +95,8 @@ export default defineComponent({
   components: { MeaningColumn, ContextColumn },
   data() {
     return {
+      confirm: false,
+      rowId: '',
       columns: [
         {
           name: "word",
@@ -122,7 +137,8 @@ export default defineComponent({
     };
   },
   methods: {
-    ...mapActions("databaseModule", ["hideItem"])
+    ...mapActions("databaseModule", ["hideItem"]),
+
   }
 });
 </script>
