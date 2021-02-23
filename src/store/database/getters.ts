@@ -32,8 +32,13 @@ const getters: GetterTree<databaseStateInterface, StateInterface> = {
       }
     }
 
+    function filterHidden(value) {
+      return !value.hidden
+    }
+
     let filteredWords = state.words.filter(filterLanguage);
     filteredWords = filteredWords.filter(filterBooks);
+    filteredWords = filteredWords.filter(filterHidden);
 
     return {
       words: filteredWords,

@@ -56,10 +56,10 @@ export default defineComponent({
     this.updateState;
   },
   computed: {
-    ...mapGetters("databaseModule", ["languageOptions", "bookOptions"]),
+    ...mapGetters("databaseModule", ["filteredEntries", "languageOptions", "bookOptions"]),
     ...mapActions("databaseModule", ["updateState"]),
     entries() {
-      return this.$store.getters['databaseModule/filteredEntries'](this.filters)
+      return this.filteredEntries(this.filters)
     }
   }
 });

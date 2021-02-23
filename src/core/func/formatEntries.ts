@@ -11,6 +11,7 @@ export async function getFormatedEntries () {
   const entries = []
   for (const item of words) {
     const entry = {
+      id: item.id,
       word: item.word,
       stem: item.stem,
       lang: item.lang,

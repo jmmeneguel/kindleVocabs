@@ -8,9 +8,13 @@ import { getFormatedEntries } from '../../core/func/formatEntries'
 
 const actions: ActionTree<databaseStateInterface, StateInterface> = {
   async updateState () {
-    console.log('action')
     const newState = await getFormatedEntries()
     this.commit('databaseModule/updateState', newState)
+  },
+  async hideItem({ commit, state }, id) {
+    const wordIds = state.words.map((item) => item.id)
+    const ind = wordIds.indexOf(id)
+    this.commit('databaseModule/hideItem', ind)
   }
 }
 

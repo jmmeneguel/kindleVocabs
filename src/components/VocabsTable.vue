@@ -59,7 +59,7 @@
               Edit
             </q-tooltip>
           </q-btn>
-          <q-btn dense flat round icon="delete" size="11px">
+          <q-btn dense flat round icon="delete" size="11px" @click="hideItem(props.row['id'])">
             <q-tooltip anchor="bottom middle" self="center middle">
               Delete
             </q-tooltip>
@@ -72,6 +72,7 @@
 
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
+import { mapGetters, mapActions } from "vuex";
 import MeaningColumn from "./MeaningColumn.vue";
 import ContextColumn from "./ContextColumn.vue";
 
@@ -119,6 +120,9 @@ export default defineComponent({
         }
       ]
     };
+  },
+  methods: {
+    ...mapActions("databaseModule", ["hideItem"])
   }
 });
 </script>
