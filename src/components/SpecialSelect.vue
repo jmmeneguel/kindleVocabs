@@ -20,7 +20,7 @@
         v-on="scope.itemEvents"
       >
         <q-item-section>
-          <q-item-label v-html="scope.opt" />
+          <q-item-label v-html="scope.opt.label" />
         </q-item-section>
       </q-item>
     </template>

@@ -53,7 +53,7 @@
 
         <q-td> </q-td>
 
-        <q-td>
+        <q-td style="width: 90px">
           <q-btn dense flat round icon="create" size="11px">
             <q-tooltip anchor="bottom middle" self="center middle">
               Edit

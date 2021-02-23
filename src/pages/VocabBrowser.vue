@@ -22,13 +22,13 @@
         </div>
         <div class="q-pb-sm" v-if="expanded">
           <div class="row justify-around">
-            <SpecialSelect :options="languageOptions" :label="'Languages'" :filter.sync="languageFilter" style="width:30%;"/>
-            <SpecialSelect :options="bookOptions" :label="'Books'" :filter.sync="bookFilter" style="width:30%;"/>
-            <SpecialSelect :options="statusOptions" :label="'Status'" :filter.sync="statusFilter" style="width:30%;"/>
+            <SpecialSelect :options="languageOptions" :label="'Languages'" :filter.sync="filters.languageFilter" style="width:30%;"/>
+            <SpecialSelect :options="bookOptions" :label="'Books'" :filter.sync="filters.bookFilter" style="width:30%;"/>
+            <SpecialSelect :options="statusOptions" :label="'Status'" :filter.sync="filters.statusFilter" style="width:30%;"/>
           </div>
         </div>
       </div>
-      <VocabsTable class="col" v-bind:data="formatedEntries" />
+      <VocabsTable class="col" v-bind:data="entries" />
     </div>
   </q-page>
 </template>
@@ -45,17 +45,22 @@ export default defineComponent({
   data () {
     return {
       expanded: false,
-      languageFilter: [],
-      bookFilter: [],
-      statusFilter: []
+      filters: {
+        languageFilter: [],
+        bookFilter: [],
+        statusFilter: []
+      }
     }
   },
   mounted() {
     this.updateState;
   },
   computed: {
-    ...mapGetters("databaseModule", ["formatedEntries", "languageOptions", "bookOptions"]),
-    ...mapActions("databaseModule", ["updateState"])
+    ...mapGetters("databaseModule", ["languageOptions", "bookOptions"]),
+    ...mapActions("databaseModule", ["updateState"]),
+    entries() {
+      return this.$store.getters['databaseModule/filteredEntries'](this.filters)
+    }
   }
 });
 </script>
