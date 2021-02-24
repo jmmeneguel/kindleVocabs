@@ -1,6 +1,12 @@
 <template>
   <div>
-    <q-table class="my-sticky-header-table" title="" :data="data.words" :columns="columns" row-key="name">
+    <q-table
+      class="my-sticky-header-table"
+      title=""
+      :data="data.words"
+      :columns="columns"
+      row-key="name"
+    >
       <q-tr slot="header" slot-scope="props">
         <q-th v-for="col in props.cols" :key="col.name" :props="props">
           {{ col.label }}
@@ -36,7 +42,7 @@
           </span>
         </q-td>
 
-        <q-td style="width: 40%; max-width: 600px" >
+        <q-td style="width: 40%; max-width: 600px">
           <MeaningColumn
             :meaning="props.row['meaning']"
             :lang="props.row['lang']"
@@ -54,12 +60,32 @@
         <q-td> </q-td>
 
         <q-td style="width: 90px">
-          <q-btn dense flat round icon="create" size="11px" v-if="false">
+          <q-btn
+            dense
+            flat
+            round
+            icon="create"
+            size="11px"
+            @click="
+              itemToEdit = props.row;
+              editItem = true;
+            "
+          >
             <q-tooltip anchor="bottom middle" self="center middle">
               Edit
             </q-tooltip>
           </q-btn>
-          <q-btn dense flat round icon="delete" size="11px" @click="rowId = props.row['id']; confirm = true">
+          <q-btn
+            dense
+            flat
+            round
+            icon="delete"
+            size="11px"
+            @click="
+              rowId = props.row['id'];
+              deleteItem = true;
+            "
+          >
             <q-tooltip anchor="bottom middle" self="center middle">
               Delete
             </q-tooltip>
@@ -68,35 +94,28 @@
       </q-tr>
     </q-table>
 
-    <q-dialog v-model="confirm" persistent>
-      <q-card>
-        <q-card-section class="row items-center">
-          <span class="q-ml-sm">Do you really want to remove this entry?</span>
-        </q-card-section>
-
-        <q-card-actions align="right">
-          <q-btn flat label="Cancel" color="primary" v-close-popup />
-          <q-btn flat label="Delete" color="primary" @click="hideItem(rowId)" v-close-popup />
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
+    <EditVocab :editItem.sync="editItem" :itemToEdit="itemToEdit" />
+    <DeleteVocab :deleteItem.sync="deleteItem" :rowId="rowId" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
-import { mapGetters, mapActions } from "vuex";
 import MeaningColumn from "./MeaningColumn.vue";
 import ContextColumn from "./ContextColumn.vue";
+import EditVocab from "./EditVocab.vue";
+import DeleteVocab from "./DeleteVocab.vue";
 
 export default defineComponent({
   name: "VocabsTable",
   props: ["data"],
-  components: { MeaningColumn, ContextColumn },
+  components: { MeaningColumn, ContextColumn, EditVocab, DeleteVocab },
   data() {
     return {
-      confirm: false,
-      rowId: '',
+      editItem: false,
+      deleteItem: false,
+      rowId: "",
+      itemToEdit: null,
       columns: [
         {
           name: "word",
@@ -135,10 +154,6 @@ export default defineComponent({
         }
       ]
     };
-  },
-  methods: {
-    ...mapActions("databaseModule", ["hideItem"]),
-
   }
 });
 </script>
@@ -179,5 +194,4 @@ export default defineComponent({
 
 .q-table__title
   text-transform: uppercase
-
 </style>

@@ -1,0 +1,77 @@
+<template>
+  <div v-if="showDialog">
+    <q-dialog v-model="showDialog" persistent>
+      <q-card style="width: 70%">
+        <q-card-section>
+          <div class="text-h6">Edit Item</div>
+        </q-card-section>
+
+        <q-scroll-area style="height: 500px">
+          <q-card-section class="q-pt-none">
+            <q-input
+              v-model="memoryItem.stem"
+              class="q-pa-lg text-h6"
+              label="Label"
+              bottom-slots
+              dense
+            >
+              <template v-slot:after>
+                <q-btn round dense flat icon="search" size="md" />
+              </template>
+            </q-input>
+
+            <EditableMeaningColumn
+              :meaning="memoryItem.meaning"
+              :lang="memoryItem.lang"
+              :stem="memoryItem.stem"
+            />
+
+            <div
+              class="q-pa-lg"
+              v-for="(lookUp, lookUpid) in memoryItem.lookUps"
+              :key="lookUpid"
+            >
+              <q-input v-model="lookUp.context" label="Context" autogrow />
+            </div>
+          </q-card-section>
+        </q-scroll-area>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Save" />
+          <q-btn flat label="Cancel" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from "@vue/composition-api";
+import EditableMeaningColumn from "./EditableMeaning.vue";
+
+export default defineComponent({
+  name: "EditVocab",
+  props: ["editItem", "itemToEdit"],
+  components: { EditableMeaningColumn },
+  data() {
+    return { memoryItem: null };
+  },
+  computed: {
+    showDialog: {
+      // getter
+      get: function() {
+        return this.editItem;
+      },
+      // setter
+      set: function(newValue) {
+        this.$emit("update:editItem", newValue);
+      }
+    }
+  },
+  watch: {
+    itemToEdit: function(val) {
+      this.memoryItem = JSON.parse(JSON.stringify(val));
+    }
+  }
+});
+</script>
