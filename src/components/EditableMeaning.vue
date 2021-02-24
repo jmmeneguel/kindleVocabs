@@ -29,14 +29,14 @@
         </div>
       </div>
       <div class="meanings">
-        <div v-for="(wMeaning, wMeaningId) in item.meaning" :key="wMeaningId">
+        <div v-for="(meaning, meaningId) in item.meaning" :key="meaningId">
           <div class="text-center text-overline text-uppercase">
-            {{ wMeaning.partOfSpeech }}
+            {{ meaning.partOfSpeech }}
           </div>
           <div>
             <q-list class="rounded-borders">
               <q-expansion-item
-                v-for="(definition, defId) in wMeaning.definitions"
+                v-for="(definition, defId) in meaning.definitions"
                 separator
                 class="text-body2"
                 :key="defId"
@@ -49,22 +49,21 @@
                 <template v-slot:header>
                   <q-item-section>
                     <div class="row full-width justify-around items-center">
-                      <span class="col" style="width: 10px">
-                        <q-btn
-                          flat
-                          dense
-                          round
-                          icon="cancel"
-                          v-if="onExpansion && defIdOver === defId"
-                        />
+                      <span
+                        class="col"
+                        style="overflow: auto;min-width: 30px; max-width: 30px;"
+                        v-if="onExpansion && defIdOver === defId"
+                      >
+                        <q-btn flat dense round icon="cancel" size="sm" />
                       </span>
 
-                      <span class="col">
+                      <span class="col-grow">
                         <q-input
                           borderless
                           autogrow
                           dense
                           v-model="definition.definition"
+                          style="overflow: auto"
                         />
                       </span>
                     </div>
