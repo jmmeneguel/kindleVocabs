@@ -37,8 +37,8 @@
         </q-scroll-area>
 
         <q-card-actions align="right">
-          <q-btn flat label="Save" />
-          <q-btn flat label="Cancel" v-close-popup />
+          <q-btn flat label="Save" @click="updateItem(memoryItem)" v-close-popup />
+          <q-btn flat label="Cancel" @click="memoryItem = JSON.parse(JSON.stringify(itemToEdit));" v-close-popup />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -48,6 +48,7 @@
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
 import EditableMeaningColumn from "./EditableMeaning.vue";
+import { mapActions } from "vuex";
 
 export default defineComponent({
   name: "EditVocab",
@@ -72,6 +73,9 @@ export default defineComponent({
     itemToEdit: function(val) {
       this.memoryItem = JSON.parse(JSON.stringify(val));
     }
+  },
+  methods: {
+    ...mapActions("databaseModule", ["updateItem"])
   }
 });
 </script>

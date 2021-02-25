@@ -33,7 +33,7 @@
           <div class="text-center text-overline text-uppercase">
             {{ meaning.partOfSpeech }}
           </div>
-          <EditableDefinitionList :definitions.sync="meaning.definitions"/>
+          <EditableDefinitionList :definitions.sync="meaning.definitions" />
         </div>
       </div>
     </div>
@@ -42,12 +42,12 @@
 
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
-import EditableDefinitionList from "./EditableDefinitionList.vue"
+import EditableDefinitionList from "./EditableDefinitionList.vue";
 
 export default defineComponent({
   name: "EditableMeaningColumn",
   props: ["meaning", "lang", "stem"],
-  components: {EditableDefinitionList},
+  components: { EditableDefinitionList },
   methods: {
     play(url) {
       const audio = new Audio(url);
