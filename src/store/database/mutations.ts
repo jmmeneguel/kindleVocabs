@@ -9,7 +9,7 @@ const mutation: MutationTree<databaseStateInterface> = {
   hideItem (state: databaseStateInterface, ind: number) {
     const hiddenElement = state.words[ind]
     hiddenElement.hidden = true
-    state.words.splice(ind, 0, hiddenElement);
+    state.words.splice(ind, 1, hiddenElement);
   }
 }
 
