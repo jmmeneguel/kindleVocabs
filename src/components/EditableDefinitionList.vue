@@ -7,8 +7,8 @@
         class="text-body2"
         :key="defId"
         @mouseenter.native="
-          onExpansion = true;
-          defIdOver = defId;
+          onExpansion = true
+          defIdOver = defId
         "
         @mouseleave.native="onExpansion = false"
       >
@@ -74,21 +74,21 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@vue/composition-api";
+import { defineComponent } from '@vue/composition-api'
 
 export default defineComponent({
-  name: "EditableDefinitionList",
-  props: ["definitions"],
+  name: 'EditableDefinitionList',
+  props: ['definitions'],
   data() {
     return {
       onExpansion: false,
-      defIdOver: ""
-    };
+      defIdOver: ''
+    }
   },
   methods: {
-    deleteDefitinion (defId: number) {
-      this.definitions.splice(defId, 1);
+    deleteDefitinion(defId: number) {
+      this.definitions.splice(defId, 1)
     }
   }
-});
+})
 </script>

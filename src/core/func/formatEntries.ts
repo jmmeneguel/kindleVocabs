@@ -3,20 +3,21 @@ import { Word } from '../classes/Word'
 import { BookInfo } from '../classes/BookInfo'
 import { LookUp } from '../classes/LookUp'
 import { TrainingData } from '../classes/TrainingData'
+import { WordsInterface } from '../../store/database/state'
 
 export async function getFormatedEntries () {
   const words: Word[] = <Word[]> await gellAllKeys('database', 'words')
   const books: BookInfo[] = <BookInfo[]> await gellAllKeys('database', 'bookInfo')
-  console.log('words', words)
   const entries = []
   for (const item of words) {
-    const entry = {
+    const entry: WordsInterface = {
       id: item.id,
       word: item.word,
       stem: item.stem,
       lang: item.lang,
       meaning: item.wordInfo,
-      lookUps: undefined,
+      hidden: item.hidden,
+      lookUps: [],
       trainingData: undefined
     }
     const p1 = getIndexedDbEntry('database', 'lookUps', 'wordId', item.id)

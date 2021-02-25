@@ -6,9 +6,9 @@
 
 import { openDB } from 'idb'
 
-async function getDb (dbName: string) {
+async function getDb(dbName: string) {
   return await openDB(dbName, 1, {
-    upgrade (db: { createObjectStore: (arg0: string) => any }) {
+    upgrade(db: { createObjectStore: (arg0: string) => any }) {
       // Create a store of objects
       const bookInfoStore = db.createObjectStore('bookInfo')
       bookInfoStore.createIndex('id', 'id')
@@ -31,7 +31,12 @@ async function getDb (dbName: string) {
   })
 }
 
-export async function writeToIndexedDb (data: any, dbName: string, storeName: string, replace = false) {
+export async function writeToIndexedDb(
+  data: any,
+  dbName: string,
+  storeName: string,
+  replace = false
+) {
   const putPromises: any[] = []
 
   const db = await getDb(dbName)
@@ -50,26 +55,35 @@ export async function writeToIndexedDb (data: any, dbName: string, storeName: st
   await Promise.all(putPromises).catch(err => console.log(err))
 }
 
-export async function gellAllKeys (dbName: string, storeName:string) {
+export async function gellAllKeys(dbName: string, storeName: string) {
   const db = await getDb(dbName)
   const values = await db.getAll(storeName)
   return values
 }
 
-export async function getIndexedDbEntry (dbName: string, storeName:string, indexName: string, key: string) {
+export async function getIndexedDbEntry(
+  dbName: string,
+  storeName: string,
+  indexName: string,
+  key: string
+) {
   const db = await getDb(dbName)
   const value = await db.getAllFromIndex(storeName, indexName, key)
   return value
 }
 
-export async function getEntryByKey (dbName: string, storeName:string, key: string) {
+export async function getEntryByKey(
+  dbName: string,
+  storeName: string,
+  key: string
+) {
   const db = await getDb(dbName)
   const store = db.transaction(storeName).objectStore(storeName)
   const value = await store.get(key)
   return value
 }
 
-export async function getAllTables () {
+export async function getAllTables() {
   const p1 = gellAllKeys('database', 'words')
   const p2 = gellAllKeys('database', 'lookUps')
   const p3 = gellAllKeys('database', 'bookInfo')
@@ -82,7 +96,7 @@ export async function getAllTables () {
     .catch(err => console.log(err))
 }
 
-async function updateTable (dbName: string, storeName:string) {
+async function updateTable(dbName: string, storeName: string) {
   const data = await gellAllKeys(dbName, storeName)
   data.forEach((item: any) => {
     item.hidden = false

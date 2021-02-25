@@ -37,8 +37,18 @@
         </q-scroll-area>
 
         <q-card-actions align="right">
-          <q-btn flat label="Save" @click="updateItem(memoryItem)" v-close-popup />
-          <q-btn flat label="Cancel" @click="memoryItem = JSON.parse(JSON.stringify(itemToEdit));" v-close-popup />
+          <q-btn
+            flat
+            label="Save"
+            @click="updateItem(memoryItem)"
+            v-close-popup
+          />
+          <q-btn
+            flat
+            label="Cancel"
+            @click="memoryItem = JSON.parse(JSON.stringify(itemToEdit))"
+            v-close-popup
+          />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -46,36 +56,48 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@vue/composition-api";
-import EditableMeaningColumn from "./EditableMeaning.vue";
-import { mapActions } from "vuex";
+import { defineComponent } from '@vue/composition-api'
+import EditableMeaningColumn from './EditableMeaning.vue'
+import { mapActions } from 'vuex'
+import { WordsInterface } from '../store/database/state'
 
 export default defineComponent({
-  name: "EditVocab",
-  props: ["editItem", "itemToEdit"],
+  name: 'EditVocab',
+
+  props: {
+    editItem: {
+      type: Boolean,
+      required: true
+    },
+    itemToEdit: {
+      type: Object as () => WordsInterface,
+      required: true
+    }
+  },
+
   components: { EditableMeaningColumn },
   data() {
-    return { memoryItem: null };
+    return { memoryItem: null }
   },
   computed: {
     showDialog: {
       // getter
-      get: function() {
-        return this.editItem;
+      get: function(): boolean {
+        return this.editItem
       },
       // setter
-      set: function(newValue) {
-        this.$emit("update:editItem", newValue);
+      set: function(newValue: WordsInterface) {
+        this.$emit('update:editItem', newValue)
       }
     }
   },
   watch: {
     itemToEdit: function(val) {
-      this.memoryItem = JSON.parse(JSON.stringify(val));
+      this.memoryItem = JSON.parse(JSON.stringify(val))
     }
   },
   methods: {
-    ...mapActions("databaseModule", ["updateItem"])
+    ...mapActions('databaseModule', ['updateItem'])
   }
-});
+})
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-file color="purple-12" v-model="model" label="Label" @input="clicked" accept=".db">
+    <q-file v-model="model" label="Label" @input="clicked" accept=".db">
         <template v-slot:prepend>
           <q-icon name="attach_file" />
         </template>

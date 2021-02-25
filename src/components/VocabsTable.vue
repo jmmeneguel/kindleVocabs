@@ -16,7 +16,7 @@
         <q-td>
           <span class="row justify-center items-center full-height full-width">
             <span class="q-pr-xs">
-              {{ props.row["stem"] }}
+              {{ props.row['stem'] }}
             </span>
             <span v-if="props.row['lang'] === 'de'">
               <q-img
@@ -67,8 +67,8 @@
             icon="create"
             size="11px"
             @click="
-              itemToEdit = props.row;
-              editItem = true;
+              itemToEdit = props.row
+              editItem = true
             "
           >
             <q-tooltip anchor="bottom middle" self="center middle">
@@ -82,8 +82,8 @@
             icon="delete"
             size="11px"
             @click="
-              rowId = props.row['id'];
-              deleteItem = true;
+              rowId = props.row['id']
+              deleteItem = true
             "
           >
             <q-tooltip anchor="bottom middle" self="center middle">
@@ -100,62 +100,72 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@vue/composition-api";
-import MeaningColumn from "./MeaningColumn.vue";
-import ContextColumn from "./ContextColumn.vue";
-import EditVocab from "./EditVocab.vue";
-import DeleteVocab from "./DeleteVocab.vue";
+import { defineComponent } from '@vue/composition-api'
+import MeaningColumn from './MeaningColumn.vue'
+import ContextColumn from './ContextColumn.vue'
+import EditVocab from './EditVocab.vue'
+import DeleteVocab from './DeleteVocab.vue'
+
+interface DatabaseInterface {
+  words: []
+  books: []
+}
 
 export default defineComponent({
-  name: "VocabsTable",
-  props: ["data"],
+  name: 'VocabsTable',
+  props: {
+    data: {
+      type: Object as () => DatabaseInterface,
+      required: true
+    }
+  },
   components: { MeaningColumn, ContextColumn, EditVocab, DeleteVocab },
   data() {
     return {
       editItem: false,
       deleteItem: false,
-      rowId: "",
+      rowId: '',
       itemToEdit: null,
       columns: [
         {
-          name: "word",
-          label: "Word",
+          name: 'word',
+          label: 'Word',
           required: true,
-          align: "center",
+          align: 'center',
           sortable: true
         },
         {
-          name: "meaning",
-          label: "Meaning",
+          name: 'meaning',
+          label: 'Meaning',
           required: true,
-          align: "center",
+          align: 'center',
           sortable: true
         },
         {
-          name: "context",
-          label: "Context",
+          name: 'context',
+          label: 'Context',
           required: true,
-          align: "center",
+          align: 'center',
           sortable: true
         },
         {
-          name: "status",
-          label: "Status",
+          name: 'status',
+          label: 'Status',
           required: true,
-          align: "center",
+          align: 'center',
           sortable: true
         },
         {
-          name: "action",
-          label: "",
+          name: 'action',
+          label: '',
           required: true,
-          align: "center",
+          align: 'center',
           sortable: true
         }
       ]
-    };
+    }
   }
-});
+})
 </script>
 <style lang="sass">
 .q-table__container

@@ -21,26 +21,35 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@vue/composition-api";
-import { mapActions } from "vuex";
+import { defineComponent } from '@vue/composition-api'
+import { mapActions } from 'vuex'
 
 export default defineComponent({
-  name: "DeleteVocab",
-  props: ["deleteItem", "rowId"],
+  name: 'DeleteVocab',
+  props: {
+    deleteItem: {
+      type: Boolean,
+      required: true
+    },
+    rowId: {
+      type: String,
+      required: true
+    }
+  },
   computed: {
     showDialog: {
       // getter
-      get: function() {
-        return this.deleteItem;
+      get: function(): boolean {
+        return this.deleteItem
       },
       // setter
-      set: function(newValue) {
-        this.$emit("update:deleteItem", newValue);
+      set: function(newValue: string) {
+        this.$emit('update:deleteItem', newValue)
       }
     }
   },
   methods: {
-    ...mapActions("databaseModule", ["hideItem"])
+    ...mapActions('databaseModule', ['hideItem'])
   }
-});
+})
 </script>

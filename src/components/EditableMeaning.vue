@@ -41,20 +41,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@vue/composition-api";
-import EditableDefinitionList from "./EditableDefinitionList.vue";
+import { defineComponent } from '@vue/composition-api'
+import EditableDefinitionList from './EditableDefinitionList.vue'
 
 export default defineComponent({
-  name: "EditableMeaningColumn",
-  props: ["meaning", "lang", "stem"],
+  name: 'EditableMeaningColumn',
+  props: ['meaning', 'lang', 'stem'],
   components: { EditableDefinitionList },
   methods: {
-    play(url) {
-      const audio = new Audio(url);
-      audio.play();
+    play(url: string) {
+      const audio = new Audio(url)
+      audio.play().catch(err => console.log(err))
     }
   }
-});
+})
 </script>
 <style scoped lang="sass">
 .meaning

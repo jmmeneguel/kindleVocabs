@@ -1,8 +1,17 @@
 <template>
   <div class="meaning row full-width items-center justify-evenly">
-    <div class="q-pa-sm full-width" v-for="(item, meaningId) in meaning" :key="meaningId">
+    <div
+      class="q-pa-sm full-width"
+      v-for="(item, meaningId) in meaning"
+      :key="meaningId"
+    >
       <div class="header column items-center">
-        <div v-if="item.word !== stem || meaning.length > 1" class="col text-primary">{{ item.word }}</div>
+        <div
+          v-if="item.word !== stem || meaning.length > 1"
+          class="col text-primary"
+        >
+          {{ item.word }}
+        </div>
         <div class="col" v-if="lang === 'en'">
           <span
             class="text-center"
@@ -39,9 +48,14 @@
                     <div class="example text-caption text-grey-9">
                       {{ definition.example }}
                     </div>
-                    <div v-if="definition.synonyms && definition.synonyms.length > 0" class="synonyms">
+                    <div
+                      v-if="
+                        definition.synonyms && definition.synonyms.length > 0
+                      "
+                      class="synonyms"
+                    >
                       <q-chip
-                        v-for="(synonym, synonymId ) in definition.synonyms"
+                        v-for="(synonym, synonymId) in definition.synonyms"
                         :key="synonymId"
                         size="11px"
                         color="primary"
@@ -62,18 +76,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@vue/composition-api";
+import { defineComponent } from '@vue/composition-api'
 
 export default defineComponent({
-  name: "MeaningColumn",
-  props: ["meaning", "lang", "stem"],
+  name: 'MeaningColumn',
+  props: ['meaning', 'lang', 'stem'],
   methods: {
-    play(url) {
-      const audio = new Audio(url);
-      audio.play();
+    play (url: string) {
+      const audio = new Audio(url)
+      audio.play().catch(err => console.log(err))
     }
   }
-});
+})
 </script>
 <style scoped lang="sass">
 .meaning
