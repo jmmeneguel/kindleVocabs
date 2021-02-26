@@ -93,9 +93,9 @@
         </q-td>
       </q-tr>
     </q-table>
-
-    <EditVocab :editItem.sync="editItem" :itemToEdit="itemToEdit" />
-    <DeleteVocab :deleteItem.sync="deleteItem" :rowId="rowId" />
+  
+    <EditVocab v-if="editItem" :editItem.sync="editItem" :itemToEdit="itemToEdit" />
+    <DeleteVocab v-if="deleteItem" :deleteItem.sync="deleteItem" :rowId="rowId" />
   </div>
 </template>
 
@@ -125,7 +125,7 @@ export default defineComponent({
       editItem: false,
       deleteItem: false,
       rowId: '',
-      itemToEdit: null,
+      itemToEdit: {},
       columns: [
         {
           name: 'word',

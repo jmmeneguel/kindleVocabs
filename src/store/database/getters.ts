@@ -1,20 +1,22 @@
 import { GetterTree } from 'vuex'
 import { StateInterface } from '../index'
 import { DatabaseStateInterface, WordsInterface } from './state'
+import { LookUp } from '../../core/classes/LookUp'
+import { SelectionOptionInterface } from '../../components/SpecialSelect'
 
 const getters: GetterTree<DatabaseStateInterface, StateInterface> = {
   filteredEntries: state => (filters: {
-    bookFilter: any[]
-    languageFilter: any[]
+    bookFilter: SelectionOptionInterface[]
+    languageFilter: SelectionOptionInterface[]
   }): DatabaseStateInterface => {
     function filterBooks(value: WordsInterface) {
       if (filters.bookFilter.length === 0) {
         return true
       } else {
         const bookIds = value.lookUps.map(
-          (item: { bookId: any }) => item.bookId
+          (item: LookUp) => item.bookId
         )
-        return filters.bookFilter.some((element: { value: any }) => {
+        return filters.bookFilter.some((element: SelectionOptionInterface) => {
           return bookIds.includes(element.value)
         })
       }
@@ -24,7 +26,7 @@ const getters: GetterTree<DatabaseStateInterface, StateInterface> = {
         return true
       } else {
         const languages: string[] = filters.languageFilter.map(
-          (item: { value: any }) => item.value
+          (item: SelectionOptionInterface) => item.value
         )
         return languages.includes(value.lang)
       }

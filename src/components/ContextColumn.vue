@@ -25,11 +25,11 @@ export default defineComponent({
 
   props: {
     lookUps: {
-      type: Object as () => LookUp[],
+      type: Array as () => LookUp[],
       required: true
     },
     books: {
-      type: Object as () => BookInfo[],
+      type: Array as () => BookInfo[],
       required: true
     }
   },

@@ -96,10 +96,10 @@ export async function getAllTables() {
     .catch(err => console.log(err))
 }
 
-async function updateTable(dbName: string, storeName: string) {
-  const data = await gellAllKeys(dbName, storeName)
-  data.forEach((item: any) => {
-    item.hidden = false
-  })
-  await writeToIndexedDb(data, dbName, storeName, true)
-}
+// async function updateTable(dbName: string, storeName: string) {
+//   const data = await gellAllKeys(dbName, storeName)
+//   data.forEach((item: any) => {
+//     item.hidden = false
+//   })
+//   await writeToIndexedDb(data, dbName, storeName, true)
+// }

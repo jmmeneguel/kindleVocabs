@@ -1,9 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
 import { ActionTree } from 'vuex'
 import { StateInterface } from '../index'
-import { DatabaseStateInterface } from './state'
+import { DatabaseStateInterface, WordsInterface } from './state'
 import { getFormatedEntries } from '../../core/func/formatEntries'
 
 const actions: ActionTree<DatabaseStateInterface, StateInterface> = {
@@ -11,13 +8,13 @@ const actions: ActionTree<DatabaseStateInterface, StateInterface> = {
     const newState = await getFormatedEntries()
     this.commit('databaseModule/updateState', newState)
   },
-  hideItem({ commit, state }, id) {
-    const wordIds = state.words.map(item => item.id)
+  hideItem({ commit, state }, id: string) {
+    const wordIds = state.words.map((item: WordsInterface) => item.id)
     const ind = wordIds.indexOf(id)
     commit('databaseModule/hideItem', ind)
   },
-  updateItem({ commit, state }, editedItem) {
-    const ind = state.words.findIndex(item => item.id === editedItem.id)
+  updateItem({ commit, state }, editedItem: WordsInterface) {
+    const ind = state.words.findIndex((item: WordsInterface) => item.id === editedItem.id)
     commit('databaseModule/updateItem', { ind, editedItem })
   }
 }

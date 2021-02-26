@@ -1,6 +1,6 @@
 import { WordInfo, wordInfoInterface } from './WordInfo'
-import { getMeaning } from '../func/apiRequest'
-import { writeToIndexedDb } from '../func/manageIndexedDb'
+// import { getMeaning } from '../func/apiRequest'
+// import { writeToIndexedDb } from '../func/manageIndexedDb'
 
 export interface wordInterface {
   id: string

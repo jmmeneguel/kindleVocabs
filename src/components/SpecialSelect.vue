@@ -31,7 +31,7 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 
-interface SelectionOption {
+interface SelectionOptionInterface {
   value: string,
   label: string
 }
@@ -40,11 +40,11 @@ export default defineComponent({
   name: 'SpecialSelect',
   props: {
     options: {
-      type: Array as () => SelectionOption[],
+      type: Array as () => SelectionOptionInterface[],
       required: true
     },
     filter: {
-      type: Array as () => SelectionOption[],
+      type: Array as () => SelectionOptionInterface[],
       required: true
     },
     label: {
@@ -54,11 +54,11 @@ export default defineComponent({
   computed: {
     selectFilter: {
       // getter
-      get: function (): SelectionOption[] {
+      get: function (): SelectionOptionInterface[] {
         return this.filter
       },
       // setter
-      set: function (newValue: SelectionOption) {
+      set: function (newValue: SelectionOptionInterface) {
         this.$emit('update:filter', newValue)
       }
     }

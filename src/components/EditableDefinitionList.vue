@@ -76,9 +76,20 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 
+interface DefinitionInterface {
+  definition: string
+  example: string
+  synonym: string[]
+}
+
 export default defineComponent({
   name: 'EditableDefinitionList',
-  props: ['definitions'],
+  props: {
+    definition: {
+      type: Array as () => DefinitionInterface[],
+      required: true
+    }
+  },
   data() {
     return {
       onExpansion: false,

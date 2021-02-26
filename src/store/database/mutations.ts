@@ -1,5 +1,5 @@
 import { MutationTree } from 'vuex'
-import { DatabaseStateInterface } from './state'
+import { DatabaseStateInterface, WordsInterface } from './state'
 
 const mutation: MutationTree<DatabaseStateInterface> = {
   updateState(state: DatabaseStateInterface, newState: DatabaseStateInterface) {
@@ -11,7 +11,7 @@ const mutation: MutationTree<DatabaseStateInterface> = {
     hiddenElement.hidden = true
     state.words.splice(ind, 1, hiddenElement)
   },
-  updateItem(state: DatabaseStateInterface, data) {
+  updateItem(state: DatabaseStateInterface, data: {ind: number, editedItem: WordsInterface}) {
     state.words.splice(data.ind, 1, data.editedItem)
   }
 }

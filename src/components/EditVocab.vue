@@ -1,5 +1,5 @@
 <template>
-  <div v-if="showDialog">
+  <div>
     <q-dialog v-model="showDialog" persistent>
       <q-card style="width: 70%">
         <q-card-section>
@@ -70,8 +70,7 @@ export default defineComponent({
       required: true
     },
     itemToEdit: {
-      type: Object as () => WordsInterface,
-      required: true
+      required: false
     }
   },
 
