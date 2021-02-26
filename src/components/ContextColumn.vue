@@ -35,7 +35,7 @@ export default defineComponent({
   },
 
   methods: {
-    getBookName(item: { bookId: any }): string | undefined {
+    getBookName(item: LookUp): string | undefined {
       let bookInfo: BookInfo
       for (const book of this.books) {
         if (book.id === item.bookId) {

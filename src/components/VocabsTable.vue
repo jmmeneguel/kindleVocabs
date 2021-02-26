@@ -93,7 +93,6 @@
         </q-td>
       </q-tr>
     </q-table>
-  
     <EditVocab v-if="editItem" :editItem.sync="editItem" :itemToEdit="itemToEdit" />
     <DeleteVocab v-if="deleteItem" :deleteItem.sync="deleteItem" :rowId="rowId" />
   </div>

@@ -2,7 +2,7 @@ import { store } from 'quasar/wrappers'
 import Vuex from 'vuex'
 
 import databaseModule from './database'
-import { databaseStateInterface } from './database/state'
+import { DatabaseStateInterface } from './database/state'
 
 /*
  * If not building with SSR mode, you can
@@ -11,7 +11,7 @@ import { databaseStateInterface } from './database/state'
 
 export interface StateInterface {
   // Define your own store structure, using submodules if needed
-  databaseModule: databaseStateInterface;
+  databaseModule: DatabaseStateInterface;
   // Declared as unknown to avoid linting issue. Best to strongly type as per the line above.
   // example: unknown;
 }

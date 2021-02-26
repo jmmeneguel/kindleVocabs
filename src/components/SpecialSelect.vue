@@ -30,11 +30,7 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-
-interface SelectionOptionInterface {
-  value: string,
-  label: string
-}
+import { SelectionOptionInterface } from '../store/database/getters'
 
 export default defineComponent({
   name: 'SpecialSelect',

@@ -2,7 +2,11 @@ import { GetterTree } from 'vuex'
 import { StateInterface } from '../index'
 import { DatabaseStateInterface, WordsInterface } from './state'
 import { LookUp } from '../../core/classes/LookUp'
-import { SelectionOptionInterface } from '../../components/SpecialSelect'
+
+export interface SelectionOptionInterface {
+  value: string,
+  label: string
+}
 
 const getters: GetterTree<DatabaseStateInterface, StateInterface> = {
   filteredEntries: state => (filters: {

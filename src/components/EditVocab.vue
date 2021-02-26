@@ -76,7 +76,7 @@ export default defineComponent({
 
   components: { EditableMeaningColumn },
   data() {
-    return { memoryItem: null }
+    return { memoryItem: {} }
   },
   computed: {
     showDialog: {
@@ -91,7 +91,7 @@ export default defineComponent({
     }
   },
   watch: {
-    itemToEdit: function(val) {
+    itemToEdit: function(val: WordsInterface) {
       this.memoryItem = JSON.parse(JSON.stringify(val))
     }
   },
