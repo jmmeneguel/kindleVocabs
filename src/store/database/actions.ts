@@ -11,11 +11,13 @@ const actions: ActionTree<DatabaseStateInterface, StateInterface> = {
   hideItem({ commit, state }, id: string) {
     const wordIds = state.words.map((item: WordsInterface) => item.id)
     const ind = wordIds.indexOf(id)
-    commit('databaseModule/hideItem', ind)
+    commit('hideItem', ind)
   },
   updateItem({ commit, state }, editedItem: WordsInterface) {
-    const ind = state.words.findIndex((item: WordsInterface) => item.id === editedItem.id)
-    commit('databaseModule/updateItem', { ind, editedItem })
+    const ind = state.words.findIndex(
+      (item: WordsInterface) => item.id === editedItem.id
+    )
+    commit('updateItem', { ind, editedItem })
   }
 }
 

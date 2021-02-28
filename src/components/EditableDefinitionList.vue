@@ -79,13 +79,13 @@ import { defineComponent } from '@vue/composition-api'
 interface DefinitionInterface {
   definition: string
   example: string
-  synonym: string[]
+  synonyms: string[]
 }
 
 export default defineComponent({
   name: 'EditableDefinitionList',
   props: {
-    definition: {
+    definitions: {
       type: Array as () => DefinitionInterface[],
       required: true
     }

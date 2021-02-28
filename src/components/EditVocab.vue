@@ -5,8 +5,7 @@
         <q-card-section>
           <div class="text-h6">Edit Item</div>
         </q-card-section>
-
-        <q-scroll-area style="height: 500px">
+        <q-scroll-area style="height: 400px">
           <q-card-section class="q-pt-none">
             <q-input
               v-model="memoryItem.stem"
@@ -40,7 +39,7 @@
           <q-btn
             flat
             label="Save"
-            @click="updateItem(memoryItem)"
+            @click="this.updateItem(this.memoryItem)"
             v-close-popup
           />
           <q-btn
@@ -70,14 +69,17 @@ export default defineComponent({
       required: true
     },
     itemToEdit: {
-      required: false
+      type: Object as () => WordsInterface,
+      required: true
     }
   },
 
   components: { EditableMeaningColumn },
+
   data() {
     return { memoryItem: {} }
   },
+
   computed: {
     showDialog: {
       // getter
@@ -90,11 +92,19 @@ export default defineComponent({
       }
     }
   },
+
   watch: {
-    itemToEdit: function(val: WordsInterface) {
-      this.memoryItem = JSON.parse(JSON.stringify(val))
+    $props: {
+      handler(newValue, oldValue) {
+        if (newValue.editItem) {
+          this.memoryItem = JSON.parse(JSON.stringify(newValue.itemToEdit))
+        }
+      },
+      deep: true,
+      immediate: true
     }
   },
+
   methods: {
     ...mapActions('databaseModule', ['updateItem'])
   }

@@ -6,6 +6,7 @@
       :data="data.words"
       :columns="columns"
       row-key="name"
+      :sort-method="customSort"
     >
       <q-tr slot="header" slot-scope="props">
         <q-th v-for="col in props.cols" :key="col.name" :props="props">
@@ -93,8 +94,8 @@
         </q-td>
       </q-tr>
     </q-table>
-    <EditVocab v-if="editItem" :editItem.sync="editItem" :itemToEdit="itemToEdit" />
-    <DeleteVocab v-if="deleteItem" :deleteItem.sync="deleteItem" :rowId="rowId" />
+    <EditVocab :editItem.sync="editItem" :itemToEdit="itemToEdit" />
+    <DeleteVocab :deleteItem.sync="deleteItem" :rowId="rowId" />
   </div>
 </template>
 
@@ -138,14 +139,14 @@ export default defineComponent({
           label: 'Meaning',
           required: true,
           align: 'center',
-          sortable: true
+          sortable: false
         },
         {
           name: 'context',
           label: 'Context',
           required: true,
           align: 'center',
-          sortable: true
+          sortable: false
         },
         {
           name: 'status',
@@ -159,9 +160,32 @@ export default defineComponent({
           label: '',
           required: true,
           align: 'center',
-          sortable: true
+          sortable: false
         }
       ]
+    }
+  },
+
+  methods: {
+    customSort(rows: any, sortBy: string, descending: boolean) {
+      const data = [...rows]
+
+      console.log(rows, sortBy, descending)
+
+
+      if (sortBy) {
+        data.sort((a, b) => {
+          const x = descending ? b : a
+          const y = descending ? a : b
+
+          if (sortBy === 'word') {
+            // string sort
+            return x['stem'] > y['stem'] ? 1 : x['stem'] < y['stem'] ? -1 : 0
+          }
+        })
+      }
+
+      return data
     }
   }
 })
