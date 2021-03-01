@@ -56,7 +56,7 @@ const linksData = [
   },
   {
     title: 'Trainer',
-    route: '/'
+    route: '/trainer'
   },
   {
     title: 'Vocabs browser',

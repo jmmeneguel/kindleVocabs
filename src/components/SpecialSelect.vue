@@ -50,11 +50,11 @@ export default defineComponent({
   computed: {
     selectFilter: {
       // getter
-      get: function (): SelectionOptionInterface[] {
+      get: function(): SelectionOptionInterface[] {
         return this.filter
       },
       // setter
-      set: function (newValue: SelectionOptionInterface) {
+      set: function(newValue: SelectionOptionInterface) {
         this.$emit('update:filter', newValue)
       }
     }

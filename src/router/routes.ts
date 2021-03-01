@@ -7,7 +7,8 @@ const routes: RouteConfig[] = [
     children: [
       { path: '', component: () => import('pages/Home.vue') },
       { path: 'add', component: () => import('pages/AddVocabs.vue') },
-      { path: 'browser', component: () => import('pages/VocabBrowser.vue') }
+      { path: 'browser', component: () => import('pages/VocabBrowser.vue') },
+      { path: 'trainer', component: () => import('pages/VocabTrainer.vue') }
     ]
   },
 
