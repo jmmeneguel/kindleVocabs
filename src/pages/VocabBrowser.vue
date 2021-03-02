@@ -22,8 +22,18 @@
         </div>
         <div class="q-pb-sm" v-if="expanded">
           <div class="row justify-around">
-            <SpecialSelect :options="languageOptions" :label="'Languages'" :filter.sync="filters.languageFilter" style="width:30%"/>
-            <SpecialSelect :options="bookOptions" :label="'Books'" :filter.sync="filters.bookFilter" style="width:30%"/>
+            <SpecialSelect
+              :options="languageOptions"
+              :label="'Languages'"
+              :filter.sync="filters.languageFilter"
+              style="width:30%"
+            />
+            <SpecialSelect
+              :options="bookOptions"
+              :label="'Books'"
+              :filter.sync="filters.bookFilter"
+              style="width:30%"
+            />
             <!-- <SpecialSelect :options="statusOptions" :label="'Status'" :filter.sync="filters.statusFilter" style="width:30%"/> -->
           </div>
         </div>
@@ -35,14 +45,14 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 import VocabsTable from '../components/VocabsTable.vue'
 import SpecialSelect from '../components/SpecialSelect.vue'
 
 export default defineComponent({
   name: 'PageIndex',
   components: { VocabsTable, SpecialSelect },
-  data () {
+  data() {
     return {
       expanded: false,
       filters: {
@@ -52,15 +62,15 @@ export default defineComponent({
       }
     }
   },
-  mounted () {
-    this.updateState
-  },
+
   computed: {
-    ...mapGetters('databaseModule', ['filteredEntries', 'languageOptions', 'bookOptions']),
+    ...mapGetters('databaseModule', [
+      'filteredEntries',
+      'languageOptions',
+      'bookOptions'
+    ]),
 
-    ...mapActions('databaseModule', ['updateState']),
-
-    entries () {
+    entries() {
       return this.filteredEntries(this.filters)
     }
   }

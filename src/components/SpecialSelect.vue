@@ -2,7 +2,6 @@
   <div>
     <q-select
       dense
-      dark
       filled
       v-model="selectFilter"
       multiple

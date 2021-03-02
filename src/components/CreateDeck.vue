@@ -5,25 +5,48 @@
         <div class="text-h6">Create Deck</div>
       </q-card-section>
       <q-scroll-area style="height: 300px">
-        <q-card-section class="q-pt-none">
-          <q-input
-            v-model="deckConfig.name"
-            class="q-pa-lg text-h6"
-            label="Label"
-            bottom-slots
-            dense
-          />
+        <q-card-section class="q-pt-none full-height">
+          <div class="full-height full-width">
+            <q-input
+              filled
+              v-model="deckConfig.name"
+              class="q-pb-md full-width text-h6"
+              label="Label"
+              bottom-slots
+              dense
+            />
+            <SpecialSelect
+              label="Languages"
+              :options="languageOptions"
+              :filter.sync="languageFilter"
+              class="q-pb-md full-width"
+            />
+            <SpecialSelect
+              label="Books"
+              :options="bookOptions"
+              :filter.sync="bookFilter"
+              class="q-pb-md  full-width"
+            />
+
+            <q-input
+              dense
+              label="Number of new words per day"
+              class="q-pb-md full-width"
+              v-model.number="newWords"
+              type="number"
+              filled
+            />
+
+            <q-input
+              dense
+              label="Number of reviews per day"
+              class="q-pb-md full-width"
+              v-model.number="reviews"
+              type="number"
+              filled
+            />
+          </div>
         </q-card-section>
-        <SpecialSelect
-          label="Languages"
-          :options="languageOptions"
-          :filter.sync="languageFilter"
-        />
-        <SpecialSelect
-          label="Languages"
-          :options="languageOptions"
-          :filter.sync="languageFilter"
-        />
       </q-scroll-area>
 
       <q-card-actions align="right">
@@ -36,6 +59,7 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
+import { mapGetters, mapActions } from 'vuex'
 import SpecialSelect from '../components/SpecialSelect.vue'
 
 export default defineComponent({
@@ -53,22 +77,20 @@ export default defineComponent({
   data() {
     return {
       deckConfig: {},
-      languageFilter: [
-        {
-          value: 'en',
-          label: 'English'
-        }
-      ],
-      languageOptions: [
-        {
-          value: 'en',
-          label: 'English'
-        }
-      ]
+      newWords: 5,
+      reviews: 30,
+      languageFilter: [],
+      bookFilter: []
     }
   },
 
   computed: {
+    ...mapGetters('databaseModule', [
+      'filteredEntries',
+      'languageOptions',
+      'bookOptions'
+    ]),
+
     showDialog: {
       // getter
       get: function(): boolean {
