@@ -27,6 +27,9 @@ async function getDb(dbName: string) {
       const trainingDataStore = db.createObjectStore('trainingData')
       trainingDataStore.createIndex('id', 'id')
       trainingDataStore.createIndex('interval', 'interval')
+
+      const decksDataStore = db.createObjectStore('decks')
+      decksDataStore.createIndex('id', 'id')
     }
   })
 }

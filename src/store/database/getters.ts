@@ -4,7 +4,7 @@ import { DatabaseStateInterface, WordsInterface } from './state'
 import { LookUp } from '../../core/classes/LookUp'
 
 export interface SelectionOptionInterface {
-  value: string,
+  value: string
   label: string
 }
 
@@ -17,9 +17,7 @@ const getters: GetterTree<DatabaseStateInterface, StateInterface> = {
       if (filters.bookFilter.length === 0) {
         return true
       } else {
-        const bookIds = value.lookUps.map(
-          (item: LookUp) => item.bookId
-        )
+        const bookIds = value.lookUps.map((item: LookUp) => item.bookId)
         return filters.bookFilter.some((element: SelectionOptionInterface) => {
           return bookIds.includes(element.value)
         })
@@ -46,7 +44,8 @@ const getters: GetterTree<DatabaseStateInterface, StateInterface> = {
 
     return {
       words: filteredWords,
-      books: state.books
+      books: state.books,
+      decks: []
     }
   },
   bookOptions: state => {
@@ -74,6 +73,11 @@ const getters: GetterTree<DatabaseStateInterface, StateInterface> = {
         value: 'pt'
       }
     ]
+  },
+
+  getDecks: state => {
+    console.log('getdecks now', state.decks)
+    return state.decks
   }
 }
 

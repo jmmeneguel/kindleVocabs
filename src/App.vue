@@ -10,13 +10,13 @@ import { mapActions } from 'vuex'
 export default defineComponent({
   name: 'App',
 
-  computed: {
+  methods: {
     ...mapActions('databaseModule', ['updateState'])
   },
 
   created() {
     console.log('App created')
-    this.updateState
+    this.updateState()
   }
 })
 </script>

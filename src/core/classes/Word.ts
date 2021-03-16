@@ -1,6 +1,6 @@
 import { WordInfo, wordInfoInterface } from './WordInfo'
-// import { getMeaning } from '../func/apiRequest'
-// import { writeToIndexedDb } from '../func/manageIndexedDb'
+import { getMeaning } from '../func/apiRequest'
+import { writeToIndexedDb } from '../func/manageIndexedDb'
 
 export interface wordInterface {
   id: string
@@ -17,14 +17,14 @@ export class Word {
   wordInfo?: WordInfo[]
   hidden: boolean
 
-  constructor (word: wordInterface) {
+  constructor(word: wordInterface) {
     this.id = word.id
     this.word = word.word
     this.stem = word.stem
     this.lang = word.lang
     this.hidden = false
     if ('wordInfo' in word) {
-      this.wordInfo = <WordInfo[]><unknown> word.wordInfo || []
+      this.wordInfo = <WordInfo[]>(<unknown>word.wordInfo) || []
     } else {
       console.log('Searching for ' + this.stem)
       // getMeaning(this)
@@ -38,9 +38,11 @@ export class Word {
       //     } else {
       //       this.wordInfo = [new WordInfo()]
       //     }
-      //     writeToIndexedDb([this], 'database', 'words', true).catch(err => console.log(err))
+      //     writeToIndexedDb([this], 'database', 'words', true).catch(err =>
+      //       console.log(err)
+      //     )
       //   })
-      //   .catch((err) => {
+      //   .catch(err => {
       //     console.error(err)
       //   })
     }

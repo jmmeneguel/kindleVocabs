@@ -23,12 +23,14 @@
         <div class="q-pb-sm" v-if="expanded">
           <div class="row justify-around">
             <SpecialSelect
+              :dark="true"
               :options="languageOptions"
               :label="'Languages'"
               :filter.sync="filters.languageFilter"
               style="width:30%"
             />
             <SpecialSelect
+              :dark="true"
               :options="bookOptions"
               :label="'Books'"
               :filter.sync="filters.bookFilter"

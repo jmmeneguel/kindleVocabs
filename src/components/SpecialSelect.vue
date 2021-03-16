@@ -1,6 +1,7 @@
 <template>
   <div>
     <q-select
+      :dark="dark"
       dense
       filled
       v-model="selectFilter"
@@ -44,6 +45,10 @@ export default defineComponent({
     },
     label: {
       type: String
+    },
+    dark: {
+      type: Boolean,
+      required: true
     }
   },
   computed: {

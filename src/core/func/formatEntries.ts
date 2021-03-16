@@ -4,10 +4,15 @@ import { BookInfo } from '../classes/BookInfo'
 import { LookUp } from '../classes/LookUp'
 import { TrainingData } from '../classes/TrainingData'
 import { WordsInterface } from '../../store/database/state'
+import { DatabaseStateInterface, Deck } from '../../store/database/state'
 
-export async function getFormatedEntries () {
-  const words: Word[] = <Word[]> await gellAllKeys('database', 'words')
-  const books: BookInfo[] = <BookInfo[]> await gellAllKeys('database', 'bookInfo')
+export async function getFormatedEntries(): Promise<DatabaseStateInterface> {
+  const words: Word[] = <Word[]>await gellAllKeys('database', 'words')
+  const books: BookInfo[] = <BookInfo[]>(
+    await gellAllKeys('database', 'bookInfo')
+  )
+  const decks: Deck[] = <Deck[]>await gellAllKeys('database', 'decks')
+
   const entries = []
   for (const item of words) {
     const entry: WordsInterface = {
@@ -24,12 +29,13 @@ export async function getFormatedEntries () {
     const p2 = getIndexedDbEntry('database', 'trainingData', 'id', item.id)
 
     const res = await Promise.all([p1, p2])
-    entry.lookUps = <LookUp[]> res[0]
-    entry.trainingData = <TrainingData><unknown> res[1][0]
+    entry.lookUps = <LookUp[]>res[0]
+    entry.trainingData = <TrainingData>(<unknown>res[1][0])
     entries.push(entry)
   }
   return {
     words: entries,
-    books: books
+    books: books,
+    decks: decks
   }
 }
