@@ -4,7 +4,7 @@ import { WordInfo } from '../../core/classes/WordInfo'
 import { BookInfo } from '../../core/classes/BookInfo'
 
 export interface Deck {
-  id: string
+  id: number
   label: string
   wordIds: string[]
   newWordsPerDay: number

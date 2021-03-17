@@ -130,7 +130,7 @@ export default defineComponent({
 
       if (validate_status) {
         this.showDialog = false
-        this.createDeck(this.deckConfig)
+        this.createDeck({ deckInfo: this.deckConfig, create: this.create })
       }
     }
   }

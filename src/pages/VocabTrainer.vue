@@ -2,7 +2,6 @@
   <q-page class="full-height">
     <q-list bordered>
       <div class="q-ml-lg q-mt-lg text-overline text-uppercase">Decks</div>
-      {{ getDecks() }}
       <q-item
         v-for="deck in decks"
         :key="deck.id"
@@ -12,7 +11,7 @@
       >
         <q-item-section avatar>
           <q-avatar color="primary" text-color="white">
-            G
+            {{ deck.name.charAt(0).toUpperCase() }}
           </q-avatar>
         </q-item-section>
 
@@ -49,7 +48,7 @@
     </q-list>
     <CreateDeck
       :showCreateDeck.sync="showCreateDeck"
-      :deckInfo.sync="deckEditInfo"
+      :deckInfo="deckEditInfo"
       :create="create"
     />
   </q-page>
@@ -83,25 +82,19 @@ export default defineComponent({
   },
 
   computed: {
-    // ...mapGetters('databaseModule', ['getDecks']),
-    decks: function() {
-      return this.getDecks()
-    }
+    ...mapGetters('databaseModule', ['decks'])
   },
 
   methods: {
-    ...mapGetters('databaseModule', ['getDecks']),
-
-    editDeck(deckInfo) {
+    editDeck(deckInfo: {}) {
       this.create = false
-      this.deckEditInfo = deckInfo
+      this.deckEditInfo = JSON.parse(JSON.stringify(deckInfo))
       this.showCreateDeck = true
     },
 
     showCreationDeckDialog() {
-      console.log(this.getDecks())
       this.create = true
-      this.deckEditInfo = this.deckInfoStd
+      this.deckEditInfo = JSON.parse(JSON.stringify(this.deckInfoStd))
       this.showCreateDeck = true
     }
   }

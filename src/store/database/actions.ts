@@ -1,6 +1,6 @@
 import { ActionTree } from 'vuex'
 import { StateInterface } from '../index'
-import { DatabaseStateInterface, WordsInterface } from './state'
+import { DatabaseStateInterface, Deck, WordsInterface } from './state'
 import { getFormatedEntries } from '../../core/func/formatEntries'
 import { writeToIndexedDb } from '../../core/func/manageIndexedDb'
 
@@ -20,11 +20,21 @@ const actions: ActionTree<DatabaseStateInterface, StateInterface> = {
     )
     commit('updateItem', { ind, editedItem })
   },
-  createDeck: async ({ commit, state }, deckInfo) => {
-    console.log('create deck action')
-    deckInfo.id = Date.now()
-    await writeToIndexedDb([deckInfo], 'database', 'decks')
-    commit('createDeck', deckInfo)
+  createDeck: async (
+    { commit, state },
+    data: { deckInfo: Deck; create: boolean }
+  ) => {
+    if (!('id' in data.deckInfo)) {
+      data.deckInfo.id = Date.now()
+    }
+
+    await writeToIndexedDb([data.deckInfo], 'database', 'decks', true)
+    let ind = -1
+    if (!data.create) {
+      const deckIds = state.decks.map((item: Deck) => item.id)
+      ind = deckIds.indexOf(data.deckInfo.id)
+    }
+    commit('createDeck', { deckInfo: data.deckInfo, ind })
   }
 }
 

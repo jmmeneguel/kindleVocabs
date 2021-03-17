@@ -75,8 +75,7 @@ const getters: GetterTree<DatabaseStateInterface, StateInterface> = {
     ]
   },
 
-  getDecks: state => {
-    console.log('getdecks now', state.decks)
+  decks: state => {
     return state.decks
   }
 }

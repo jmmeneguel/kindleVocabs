@@ -1,5 +1,6 @@
 import { MutationTree } from 'vuex'
-import { DatabaseStateInterface, WordsInterface } from './state'
+import { DatabaseStateInterface, Deck, WordsInterface } from './state'
+import Vue from 'vue'
 
 const mutation: MutationTree<DatabaseStateInterface> = {
   updateState(state: DatabaseStateInterface, newState: DatabaseStateInterface) {
@@ -18,8 +19,15 @@ const mutation: MutationTree<DatabaseStateInterface> = {
   ) {
     state.words.splice(data.ind, 1, data.editedItem)
   },
-  createDeck(state: DatabaseStateInterface, deckInfo) {
-    state.decks.push(deckInfo)
+  createDeck(
+    state: DatabaseStateInterface,
+    res: { deckInfo: Deck; ind: number }
+  ) {
+    if (res.ind === -1) {
+      state.decks.push(res.deckInfo)
+    } else {
+      state.decks.splice(res.ind, 1, res.deckInfo)
+    }
   }
 }
 
