@@ -91,11 +91,7 @@ export default defineComponent({
   },
 
   computed: {
-    ...mapGetters('databaseModule', [
-      'filteredEntries',
-      'languageOptions',
-      'bookOptions'
-    ]),
+    ...mapGetters('databaseModule', ['languageOptions', 'bookOptions']),
 
     showDialog: {
       // getter

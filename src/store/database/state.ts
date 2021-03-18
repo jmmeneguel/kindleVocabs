@@ -9,8 +9,8 @@ export interface Deck {
   wordIds: string[]
   newWordsPerDay: number
   reviewsPerDay: number
-  languages: string[]
-  books: string[]
+  languageFilter: []
+  bookFilter: []
 }
 
 export interface WordsInterface {

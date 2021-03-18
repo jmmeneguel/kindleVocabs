@@ -15,7 +15,6 @@
           <span class="text-weight-light">VOCABS</span>
           <span class="text-weight-bold">TRAINER</span>
         </q-toolbar-title>
-
       </q-toolbar>
     </q-header>
 
@@ -26,10 +25,7 @@
       content-class="bg-grey-1"
     >
       <q-list>
-        <q-item-label
-          header
-          class="text-grey-8"
-        >
+        <q-item-label header class="text-grey-8">
           <!-- Essential Links -->
         </q-item-label>
         <EssentialLink
@@ -56,7 +52,7 @@ const linksData = [
   },
   {
     title: 'Trainer',
-    route: '/trainer'
+    route: '/decks'
   },
   {
     title: 'Vocabs browser',
@@ -77,7 +73,7 @@ import { defineComponent, ref } from '@vue/composition-api'
 export default defineComponent({
   name: 'MainLayout',
   components: { EssentialLink },
-  setup () {
+  setup() {
     const leftDrawerOpen = ref(false)
     const essentialLinks = ref(linksData)
 

@@ -1,6 +1,6 @@
 <template>
-  <q-page class="full-height">
-    <div class="column full-height">
+  <q-page class="full-height full-width">
+    <div class="column full-width full-height">
       <div
         class="col-auto full-width bg-secondary text-white"
         :style="expanded ? 'max-height: 100%' : 'max-height: 30px'"
@@ -40,7 +40,7 @@
           </div>
         </div>
       </div>
-      <VocabsTable class="col" v-bind:data="entries" />
+      <VocabsTable class="col full-width" v-bind:data="entries" />
     </div>
   </q-page>
 </template>
