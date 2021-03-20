@@ -86,7 +86,7 @@ const mutation: MutationTree<AppStateInterface> = {
 
   updateTrainingWords(state, items) {
     state.trainer.allWords = items
-    state.trainer.trainingSet = [] //getTrainingSet(state.trainer.currentDeck, items)
+    state.trainer.trainingSet = getTrainingSet(state.trainer.currentDeck, items)
   }
 }
 

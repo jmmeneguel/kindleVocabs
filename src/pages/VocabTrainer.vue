@@ -1,8 +1,7 @@
 <template>
   <div class="fit bg-light-2">
-    {{ traininSet.length }}
     <q-card
-      v-if="traininSet.length > 0"
+      v-if="trainingSet.length > 0"
       class="fixed-center"
       style="width: 50%; min-width: 300px;"
     >
@@ -73,6 +72,13 @@
     </q-card>
 
     <q-card v-else class="fixed-center" style="width: 50%; min-width: 300px;">
+      <q-card-section>
+        <q-card-section class="full-width">
+          <div class="full-width text-h6 text-center">
+            No card on deck's training set.
+          </div>
+        </q-card-section>
+      </q-card-section>
     </q-card>
   </div>
 </template>
@@ -123,7 +129,6 @@ export default defineComponent({
     ...mapActions('appModule', ['updateTrainingWord']),
 
     updateWord(userGrade: number) {
-      console.log(userGrade)
       this.showAnswer = false
       this.updateTrainingWord(userGrade)
     }
