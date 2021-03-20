@@ -7,8 +7,6 @@ import { WordsInterface } from '../database/state'
 
 const actions: ActionTree<AppStateInterface, StateInterface> = {
   updateTrainingWord: async ({ commit, state }, userGrade: number) => {
-    console.log('update', state.trainer.currentWord, userGrade)
-
     if (userGrade !== -1) {
       const trainingData = new TrainingData(
         JSON.parse(JSON.stringify(state.trainer.currentWord.trainingData[0]))
@@ -17,8 +15,10 @@ const actions: ActionTree<AppStateInterface, StateInterface> = {
 
       writeToIndexedDb([trainingData], 'database', 'trainingData', true)
 
-      console.log('new interval', trainingData.interval)
-      const ind = state.trainer.trainingSet.findIndex(
+      const indTrainingSet = state.trainer.trainingSet.findIndex(
+        item => item.id === state.trainer.currentWord.id
+      )
+      const indAllWords = state.trainer.allWords.findIndex(
         item => item.id === state.trainer.currentWord.id
       )
       if (trainingData.interval > 0) {
@@ -28,7 +28,11 @@ const actions: ActionTree<AppStateInterface, StateInterface> = {
           JSON.stringify(state.trainer.currentWord)
         )
         updatedWord.trainingData = [trainingData]
-        commit('updateWord', { editedWord: updatedWord, ind })
+        commit('updateWord', {
+          editedWord: updatedWord,
+          indTrainingSet,
+          indAllWords
+        })
       }
     }
     commit('updateTrainingWord')

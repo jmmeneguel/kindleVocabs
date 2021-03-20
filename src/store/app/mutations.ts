@@ -53,6 +53,8 @@ function getTrainingSet(
 
   const trainingSubset = newWords.concat(reviews)
   shuffle(trainingSubset)
+
+  console.log('trainingSet length', trainingSubset.length)
   return trainingSubset
 }
 
@@ -72,16 +74,20 @@ const mutation: MutationTree<AppStateInterface> = {
   },
 
   removeWordFromTrainingSet(state, ind) {
-    //TODO: remove word
     console.log('remove word')
     state.trainer.trainingSet.splice(ind, 1)
   },
 
   updateWord(
     state: AppStateInterface,
-    data: { ind: number; editedWord: WordsInterface }
+    data: {
+      indTrainingSet: number
+      indAllWords: number
+      editedWord: WordsInterface
+    }
   ) {
-    state.trainer.trainingSet.splice(data.ind, 1, data.editedWord)
+    state.trainer.trainingSet.splice(data.indTrainingSet, 1, data.editedWord)
+    state.trainer.allWords.splice(data.indAllWords, 1, data.editedWord)
   },
 
   updateTrainingWords(state, items) {
