@@ -17,15 +17,32 @@
       </q-tooltip>
     </q-item-section>
 
-    <q-item-section>{{ lookup.context }}</q-item-section>
+    <q-item-section>
+      <div>
+        <span
+          v-for="(element, i) in lookup.context.split(' ')"
+          :key="i"
+          :class="
+            element.replace(/[^a-zA-Z]+/g, '') ===
+            word.replace(/[^a-zA-Z]+/g, '')
+              ? 'text-bold'
+              : 'text-regular'
+          "
+          style="display: 'inline-block';"
+        >
+          {{ element }}
+        </span>
+      </div>
+    </q-item-section>
   </q-item>
 </template>
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
+import { BookInfo } from 'src/core/classes/BookInfo'
 import { mapGetters } from 'vuex'
 
-function loadImage(url) {
+function loadImage(url: string) {
   return new Promise(resolve => {
     const image = new Image()
 
@@ -42,7 +59,11 @@ export default defineComponent({
   props: {
     lookup: {
       type: Object,
-      required: false
+      required: true
+    },
+    word: {
+      type: String,
+      required: true
     }
   },
 

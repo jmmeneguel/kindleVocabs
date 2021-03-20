@@ -126,6 +126,7 @@ export default defineComponent({
 
       if (validate_status) {
         this.showDialog = false
+        console.log(this.deckConfig)
         this.createDeck({ deckInfo: this.deckConfig, create: this.create })
       }
     }

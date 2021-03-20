@@ -76,7 +76,7 @@ export default defineComponent({
         reviews: 30,
         bookFilter: [],
         languageFilter: [],
-        vocabs: []
+        wordIds: []
       },
       create: false
     }

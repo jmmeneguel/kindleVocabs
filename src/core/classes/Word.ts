@@ -1,6 +1,7 @@
 import { WordInfo, wordInfoInterface } from './WordInfo'
 import { getMeaning } from '../func/apiRequest'
 import { writeToIndexedDb } from '../func/manageIndexedDb'
+import { TrainingData } from './TrainingData'
 
 export interface wordInterface {
   id: string
@@ -8,6 +9,7 @@ export interface wordInterface {
   stem: string
   lang: string
   wordInfo?: wordInfoInterface[]
+  trainingData?: TrainingData[]
 }
 export class Word {
   id: string

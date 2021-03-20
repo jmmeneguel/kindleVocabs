@@ -8,6 +8,9 @@ const getters: GetterTree<AppStateInterface, StateInterface> = {
   },
   currentTrainerWord: state => {
     return state.trainer.currentWord
+  },
+  trainingSet: state => {
+    return state.trainer.trainingSet
   }
 }
 

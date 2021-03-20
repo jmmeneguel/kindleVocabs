@@ -5,6 +5,8 @@ export interface AppStateInterface {
   trainer: {
     currentDeck: Deck
     currentWord: wordInterface
+    allWords: wordInterface[]
+    trainingSet: wordInterface[]
   }
 }
 
@@ -25,7 +27,9 @@ function state(): AppStateInterface {
         lang: '',
         stem: '',
         word: ''
-      }
+      },
+      allWords: [],
+      trainingSet: []
     }
   }
 }

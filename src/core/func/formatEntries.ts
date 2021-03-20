@@ -14,11 +14,23 @@ export interface SelectionOptionInterface {
   label: string
 }
 
+export function getVocabsInDeck(deck: Deck, entries) {
+  const vocabs = getFilteredWords(entries, {
+    bookFilter: deck.bookFilter,
+    languageFilter: deck.languageFilter
+  }).map(item => item.id)
+  deck.wordIds = vocabs
+
+  return deck
+}
+
 export async function getFormatedEntries(): Promise<DatabaseStateInterface> {
-  const words: Word[] = <Word[]>await gellAllKeys('database', 'words')
-  const books: BookInfo[] = <BookInfo[]>(
-    await gellAllKeys('database', 'bookInfo')
-  )
+  const p1 = gellAllKeys('database', 'words')
+  const p2 = gellAllKeys('database', 'bookInfo')
+
+  let res = await Promise.all([p1, p2])
+  const words: Word[] = <Word[]>res[0]
+  const books: BookInfo[] = <BookInfo[]>res[1]
 
   const entries = []
   for (const item of words) {
@@ -30,27 +42,21 @@ export async function getFormatedEntries(): Promise<DatabaseStateInterface> {
       meaning: item.wordInfo,
       hidden: item.hidden,
       lookUps: [],
-      trainingData: undefined
+      trainingData: []
     }
-    const p1 = getIndexedDbEntry('database', 'lookUps', 'wordId', item.id)
-    const p2 = getIndexedDbEntry('database', 'trainingData', 'id', item.id)
+    const p3 = getIndexedDbEntry('database', 'lookUps', 'wordId', item.id)
+    const p4 = getIndexedDbEntry('database', 'trainingData', 'id', item.id)
 
-    const res = await Promise.all([p1, p2])
+    res = await Promise.all([p3, p4])
     entry.lookUps = <LookUp[]>res[0]
-    entry.trainingData = <TrainingData>(<unknown>res[1][0])
+    entry.trainingData = <TrainingData[]>res[1]
     entries.push(entry)
   }
 
   const decks: Deck[] = <Deck[]>await gellAllKeys('database', 'decks')
-  const modifiedDecks = []
-  for (const deck of decks) {
-    const vocabs = getFilteredWords(entries, {
-      bookFilter: deck.bookFilter,
-      languageFilter: deck.languageFilter
-    }).map(item => item.id)
-    deck.wordIds = vocabs
-    modifiedDecks.push(deck)
-  }
+  const modifiedDecks = decks.map((deck: Deck) =>
+    getVocabsInDeck(deck, entries)
+  )
 
   return {
     words: entries,

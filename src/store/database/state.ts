@@ -20,7 +20,7 @@ export interface WordsInterface {
   lang: string
   meaning: WordInfo[] | undefined
   lookUps: LookUp[]
-  trainingData: TrainingData | undefined
+  trainingData: TrainingData[] | undefined
   hidden: boolean
 }
 
