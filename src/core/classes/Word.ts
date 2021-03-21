@@ -3,7 +3,7 @@ import { getMeaning } from '../func/apiRequest'
 import { writeToIndexedDb } from '../func/manageIndexedDb'
 import { TrainingData } from './TrainingData'
 
-export interface wordInterface {
+export interface WordInterface {
   id: string
   word: string
   stem: string
@@ -17,9 +17,10 @@ export class Word {
   stem: string
   lang: string
   wordInfo?: WordInfo[]
+  trainingData?: TrainingData[]
   hidden: boolean
 
-  constructor(word: wordInterface) {
+  constructor(word: WordInterface) {
     this.id = word.id
     this.word = word.word
     this.stem = word.stem
@@ -31,6 +32,9 @@ export class Word {
       console.log('Searching for ' + this.stem)
       getMeaning(this)
         .then(res => {
+          if (res === undefined) {
+            console.log(this.word, res)
+          }
           if (res.length > 0) {
             const wordInfos: WordInfo[] = []
             res.forEach(wordInfoData => {

@@ -1,12 +1,12 @@
-import { wordInterface } from 'src/core/classes/Word'
+import { WordInterface } from 'src/core/classes/Word'
 import { Deck } from '../database/state'
 
 export interface AppStateInterface {
   trainer: {
     currentDeck: Deck
-    currentWord: wordInterface
-    allWords: wordInterface[]
-    trainingSet: wordInterface[]
+    currentWord: WordInterface
+    allWords: WordInterface[]
+    trainingSet: WordInterface[]
   }
 }
 

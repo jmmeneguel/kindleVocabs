@@ -58,9 +58,10 @@ export async function writeToIndexedDb(
   await Promise.all(putPromises).catch(err => console.log(err))
 }
 
-export async function gellAllKeys(dbName: string, storeName: string) {
+export async function getAllKeys(dbName: string, storeName: string) {
   const db = await getDb(dbName)
   const values = await db.getAll(storeName)
+
   return values
 }
 
@@ -87,10 +88,10 @@ export async function getEntryByKey(
 }
 
 export async function getAllTables() {
-  const p1 = gellAllKeys('database', 'words')
-  const p2 = gellAllKeys('database', 'lookUps')
-  const p3 = gellAllKeys('database', 'bookInfo')
-  const p4 = gellAllKeys('database', 'trainingData')
+  const p1 = getAllKeys('database', 'words')
+  const p2 = getAllKeys('database', 'lookUps')
+  const p3 = getAllKeys('database', 'bookInfo')
+  const p4 = getAllKeys('database', 'trainingData')
 
   await Promise.all([p1, p2, p3, p4])
     .then(res => {
@@ -100,7 +101,7 @@ export async function getAllTables() {
 }
 
 // async function updateTable(dbName: string, storeName: string) {
-//   const data = await gellAllKeys(dbName, storeName)
+//   const data = await getAllKeys(dbName, storeName)
 //   data.forEach((item: any) => {
 //     item.hidden = false
 //   })

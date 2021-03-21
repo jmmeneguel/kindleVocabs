@@ -1,11 +1,10 @@
+import { Word } from 'src/core/classes/Word'
+import { wordInfoInterface } from 'src/core/classes/WordInfo'
 import { MutationTree } from 'vuex'
 import { Deck, WordsInterface } from '../database/state'
 import { AppStateInterface } from './state'
 
-function compareTrainingData(
-  a: { trainingData: { attemptHistory: []; interval: number }[] },
-  b: { trainingData: { attemptHistory: []; interval: number }[] }
-) {
+function compareTrainingData(a: WordsInterface[], b: WordsInterface[]) {
   const a_nextAttempt =
     a.trainingData[0].attemptHistory[-1] ||
     Date.now() + 8.64e7 * a.trainingData[0].interval
@@ -29,10 +28,7 @@ function shuffle(array) {
   return array
 }
 
-function getTrainingSet(
-  deckConfig: { newWordsPerDay: any; reviewsPerDay: any },
-  allWords: any
-) {
+function getTrainingSet(deckConfig: Deck, allWords: WordsInterface[]) {
   let newWords = []
   let reviews = []
 

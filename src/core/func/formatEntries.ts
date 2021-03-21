@@ -1,4 +1,4 @@
-import { gellAllKeys, getIndexedDbEntry } from './manageIndexedDb'
+import { getAllKeys, getIndexedDbEntry } from './manageIndexedDb'
 import { Word } from '../classes/Word'
 import { BookInfo } from '../classes/BookInfo'
 import { LookUp } from '../classes/LookUp'
@@ -25,8 +25,8 @@ export function getVocabsInDeck(deck: Deck, entries) {
 }
 
 export async function getFormatedEntries(): Promise<DatabaseStateInterface> {
-  const p1 = gellAllKeys('database', 'words')
-  const p2 = gellAllKeys('database', 'bookInfo')
+  const p1 = getAllKeys('database', 'words')
+  const p2 = getAllKeys('database', 'bookInfo')
 
   let res = await Promise.all([p1, p2])
   const words: Word[] = <Word[]>res[0]
@@ -53,7 +53,7 @@ export async function getFormatedEntries(): Promise<DatabaseStateInterface> {
     entries.push(entry)
   }
 
-  const decks: Deck[] = <Deck[]>await gellAllKeys('database', 'decks')
+  const decks: Deck[] = <Deck[]>await getAllKeys('database', 'decks')
   const modifiedDecks = decks.map((deck: Deck) =>
     getVocabsInDeck(deck, entries)
   )
