@@ -1,7 +1,6 @@
 import { GetterTree } from 'vuex'
 import { StateInterface } from '../index'
 import { DatabaseStateInterface, WordsInterface } from './state'
-import { LookUp } from '../../core/classes/LookUp'
 import { getFilteredWords } from '../../core/func/formatEntries'
 
 export interface SelectionOptionInterface {
@@ -17,9 +16,11 @@ const getters: GetterTree<DatabaseStateInterface, StateInterface> = {
     return {
       words: getFilteredWords(state.words, filters),
       books: state.books,
-      decks: []
+      decks: [],
+      trainer: {}
     }
   },
+
   bookOptions: state => {
     const bookOptions: { label: string; value: string }[] = []
     state.books.forEach(item => {
@@ -30,6 +31,7 @@ const getters: GetterTree<DatabaseStateInterface, StateInterface> = {
     })
     return bookOptions
   },
+
   languageOptions: () => {
     return [
       {
@@ -46,11 +48,25 @@ const getters: GetterTree<DatabaseStateInterface, StateInterface> = {
       }
     ]
   },
+
   decks: state => {
     return state.decks
   },
+
   books: state => {
     return state.books
+  },
+
+  currentTrainerDeck: state => {
+    return state.trainer.currentDeck
+  },
+
+  currentTrainerWord: state => {
+    return state.trainer.currentWord
+  },
+
+  trainingSet: state => {
+    return state.trainer.trainingSet
   }
 }
 

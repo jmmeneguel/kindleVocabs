@@ -4,9 +4,6 @@ import Vuex from 'vuex'
 import databaseModule from './database'
 import { DatabaseStateInterface } from './database/state'
 
-import appModule from './app'
-import { AppStateInterface } from './app/state'
-
 /*
  * If not building with SSR mode, you can
  * directly export the Store instantiation
@@ -15,7 +12,6 @@ import { AppStateInterface } from './app/state'
 export interface StateInterface {
   // Define your own store structure, using submodules if needed
   databaseModule: DatabaseStateInterface
-  appModule: AppStateInterface
   // Declared as unknown to avoid linting issue. Best to strongly type as per the line above.
   // example: unknown;
 }
@@ -25,8 +21,7 @@ export default store(function({ Vue }) {
 
   const Store = new Vuex.Store<StateInterface>({
     modules: {
-      databaseModule,
-      appModule
+      databaseModule
     },
 
     // enable strict mode (adds overhead!)

@@ -87,7 +87,7 @@ export default defineComponent({
   },
 
   methods: {
-    ...mapMutations('appModule', ['updateTrainerCurrentDeck']),
+    ...mapMutations('databaseModule', ['updateTrainerCurrentDeck']),
 
     editDeck(deckInfo: {}) {
       this.create = false

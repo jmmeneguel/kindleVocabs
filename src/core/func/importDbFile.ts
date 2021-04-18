@@ -56,10 +56,11 @@ export async function importDbFile(filePath: Blob) {
       const trainingDataData: trainingDataInterface = { id: item.id }
       trainingDataEntries.push(new TrainingData(trainingDataData))
     } else {
-      const wordItem = <WordInterface[]>(
-        (<unknown>await getIndexedDbEntry('database', 'words', 'id', item.id))
-      )
-      const word = new Word(wordItem[0])
+      getIndexedDbEntry('database', 'words', 'id', item.id)
+        .then(res => {
+          const word = new Word(res[0])
+        })
+        .catch(err => console.log(err))
     }
   }
 

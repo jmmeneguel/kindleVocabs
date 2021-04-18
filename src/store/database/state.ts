@@ -1,4 +1,5 @@
 import { LookUp } from '../../core/classes/LookUp'
+import { WordInterface } from 'src/core/classes/Word'
 import { TrainingData } from '../../core/classes/TrainingData'
 import { WordInfo } from '../../core/classes/WordInfo'
 import { BookInfo } from '../../core/classes/BookInfo'
@@ -28,10 +29,39 @@ export interface DatabaseStateInterface {
   words: WordsInterface[]
   books: BookInfo[]
   decks: Deck[]
+  trainer: {
+    currentDeck: Deck
+    currentWord: WordInterface
+    allWords: WordInterface[]
+    trainingSet: WordInterface[]
+  }
 }
 
 function state(): DatabaseStateInterface {
-  return { words: [], books: [], decks: [] }
+  return {
+    words: [],
+    books: [],
+    decks: [],
+    trainer: {
+      currentDeck: {
+        id: 0,
+        bookFilter: [],
+        label: '',
+        languageFilter: [],
+        newWordsPerDay: 0,
+        reviewsPerDay: 0,
+        wordIds: []
+      },
+      currentWord: {
+        id: '',
+        lang: '',
+        stem: '',
+        word: ''
+      },
+      allWords: [],
+      trainingSet: []
+    }
+  }
 }
 
 export default state

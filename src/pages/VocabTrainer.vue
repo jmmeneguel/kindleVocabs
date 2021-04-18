@@ -110,12 +110,12 @@ export default defineComponent({
   },
 
   computed: {
-    ...mapGetters('appModule', [
+    ...mapGetters('databaseModule', [
       'currentTrainerDeck',
       'currentTrainerWord',
-      'trainingSet'
+      'trainingSet',
+      'filteredEntries'
     ]),
-    ...mapGetters('databaseModule', ['filteredEntries']),
     allWords: function() {
       return this.filteredEntries({
         bookFilter: this.currentTrainerDeck.bookFilter,
@@ -125,8 +125,8 @@ export default defineComponent({
   },
 
   methods: {
-    ...mapMutations('appModule', ['updateTrainingWords']),
-    ...mapActions('appModule', ['updateTrainingWord']),
+    ...mapMutations('databaseModule', ['updateTrainingWords']),
+    ...mapActions('databaseModule', ['updateTrainingWord']),
 
     updateWord(userGrade: number) {
       this.showAnswer = false

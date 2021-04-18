@@ -27,12 +27,14 @@ export function getVocabsInDeck(deck: Deck, entries) {
 export async function getFormatedEntries(): Promise<DatabaseStateInterface> {
   const p1 = getAllKeys('database', 'words')
   const p2 = getAllKeys('database', 'bookInfo')
+  const p5 = getAllKeys('database', 'decks')
 
-  let res = await Promise.all([p1, p2])
+  let res = await Promise.all([p1, p2, p5])
   const words: Word[] = <Word[]>res[0]
   const books: BookInfo[] = <BookInfo[]>res[1]
+  const decks: Deck[] = <Deck[]>res[2]
 
-  const entries = []
+  const entries: WordsInterface[] = []
   for (const item of words) {
     const entry: WordsInterface = {
       id: item.id,
@@ -53,7 +55,6 @@ export async function getFormatedEntries(): Promise<DatabaseStateInterface> {
     entries.push(entry)
   }
 
-  const decks: Deck[] = <Deck[]>await getAllKeys('database', 'decks')
   const modifiedDecks = decks.map((deck: Deck) =>
     getVocabsInDeck(deck, entries)
   )
